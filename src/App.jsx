@@ -1,20 +1,18 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from './context/ThemeContext';
-import SignIn from './features/auth/pages/SignIn';
-
+import { BrowserRouter as Router } from 'react-router-dom';
+import { ThemeProvider } from './context/ThemeProvider';
+import AppRoutes from './routes/AppRoutes';
 import './App.css';
+import { LanguageProvider } from './context/LanguageContext.jsx';
 
 function App() {
   return (
-    <ThemeProvider>
-      <Router>
-        <div className="app">
-          <Routes>
-            <Route path="/" element={<SignIn />} />
-          </Routes>
-        </div>
-      </Router>
-    </ThemeProvider>
+    <LanguageProvider>
+      <ThemeProvider>
+        <Router>
+          <AppRoutes />
+        </Router>
+      </ThemeProvider>
+    </LanguageProvider>
   );
 }
 

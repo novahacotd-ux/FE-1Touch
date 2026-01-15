@@ -7,7 +7,6 @@
   --background-light: #f8fafc;
   --text-dark: #f8fafc;
   --text-light: #1e293b;
-  --second-bg: #131313;
 }
 
 
@@ -57,7 +56,8 @@ body {
     min-width: 375px;
     color: var(--tc);
     background-color: var(--main-bg);
-    overflow-x: hidden
+    overflow-x: hidden;
+    margin: 0;
 }
 
 body.rtl.rtl-enable {

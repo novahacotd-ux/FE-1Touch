@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import styles from "./SignIn.module.css";
-
+import { Link, useNavigate } from 'react-router-dom';
+import "./SignIn.css";
 
 const SignIn = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -23,6 +23,7 @@ const SignIn = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form submitted:', formData);
+        navigate('/admin');
     };
 
     return (

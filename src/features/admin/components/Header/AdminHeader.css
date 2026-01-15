@@ -1,0 +1,106 @@
+.admin-header {
+    height: 70px;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+}
+
+.admin-header-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--tc);
+}
+
+.admin-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-header-icon-btn {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    border: 1px solid var(--border);
+    align-items: center;
+    justify-content: center;
+    background: var(--main-bg);
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--tc);
+    padding: 6px;
+    border-radius: var(--radius);
+    transition: background 0.2s ease;
+}
+
+.admin-header-icon-btn:hover {
+    background: var(--mc-trans);
+    color: var(--mc);
+}
+
+.admin-header-user-wrapper {
+    position: relative;
+}
+
+.admin-header-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    background: var(--main-bg);
+    border: 1px solid var(--border);
+    font-weight: 500;
+    color: var(--tc);
+    transition: all 0.2s ease;
+}
+
+.admin-header-user:hover {
+    background: var(--mc-trans);
+    color: var(--mc);
+    border-color: var(--mc);
+}
+
+.admin-header-user-name {
+    font-size: 14px;
+}
+
+.admin-header-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 200px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 6px;
+    z-index: 100;
+    animation: fadeIn 0.2s ease;
+}
+
+.admin-header-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--tc);
+    transition: all 0.2s ease;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.admin-header-dropdown-item:hover {
+    background: var(--mc-trans);
+    color: var(--mc);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
