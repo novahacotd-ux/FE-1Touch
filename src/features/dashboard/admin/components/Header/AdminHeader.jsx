@@ -1,7 +1,7 @@
 import './AdminHeader.css';
 import { FiGlobe, FiMoon, FiSun, FiUser, FiLogOut } from 'react-icons/fi';
-import { useTheme } from '../../../../context/useTheme';
-import { useLanguage } from '../../../../context/useLanguage';
+import { useTheme } from '../../../../../context/useTheme';
+import { useLanguage } from '../../../../../context/useLanguage';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
