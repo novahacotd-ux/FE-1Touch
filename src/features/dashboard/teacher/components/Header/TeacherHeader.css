@@ -685,7 +685,7 @@ a,
     position: relative;
 }
 
-.acc-section .switcher .switcher-item {
+.teacher-header-scope .acc-section .switcher .switcher-item {
     position: relative;
     z-index: 3;
     display: flex;
@@ -703,10 +703,9 @@ a,
     cursor: pointer;
 }
 
-.acc-section .switcher .switcher-item.active {
+.teacher-header-scope .acc-section .switcher .switcher-item.active {
     background: var(--border);
     border-radius: 100px;
-    color: transparent;
 }
 
 /* Dashboard Content Area */

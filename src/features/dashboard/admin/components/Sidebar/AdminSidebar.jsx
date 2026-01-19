@@ -20,8 +20,8 @@ const AdminSidebar = () => {
     const { t } = useLanguage();
     
     const menu = [
-        { key: 'dashboard', path: '/admin', label: t('dashboard'), icon: <FiHome /> },
-        { key: 'teacher', path: '/admin/teacher', label: t('teacher'), icon: <FiUsers /> },
+        { key: 'dashboard', path: '/admin', label: t('dashboard'), icon: <FiHome />, end: true },
+        { key: 'teacher', path: '/admin/teachers', label: t('teacher'), icon: <FiUsers /> },
         { key: 'classes', path: '/admin/classes', label: t('classes'), icon: <FiBook /> },
         { key: 'subject', path: '/admin/subject', label: t('subject'), icon: <FiLayers /> },
         { key: 'assignments', path: '/admin/assignments', label: t('assignments'), icon: <FiClipboard /> },
@@ -47,6 +47,7 @@ const AdminSidebar = () => {
                     <NavLink
                         key={item.key}
                         to={item.path}
+                        end={item.end}
                         className={({ isActive }) =>
                             `admin-sidebar-menu-item ${isActive ? 'active' : ''}`
                         }

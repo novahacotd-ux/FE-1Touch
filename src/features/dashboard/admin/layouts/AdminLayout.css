@@ -1,6 +1,8 @@
 .admin-layout {
     display: flex;
     height: 100vh;
+    width: 100vw;
+    overflow: hidden;
     background: var(--main-bg);
     color: var(--tc);
 }
@@ -10,6 +12,8 @@
     display: flex;
     flex-direction: column;
     background: var(--main-bg);
+    min-width: 0; /* CRITICAL: Prevents flex item from overflowing viewport */
+    overflow: hidden;
 }
 
 .admin-layout-content {
@@ -17,4 +21,13 @@
     padding: 24px;
     background: var(--second-bg);
     overflow-y: auto;
+    overflow-x: hidden; /* Prevent page-level horizontal scroll */
+    position: relative;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .admin-layout-content {
+        padding: 16px; /* Reduce padding on mobile */
+    }
 }

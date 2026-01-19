@@ -1,0 +1,326 @@
+/* SharedAdmin.css - Common styles for Admin Dashboard pages */
+
+/* Tokens */
+:root {
+  --good: #22c55e;
+  --warn: #f59e0b;
+  --bad: #ef4444;
+  --info: #6366f1;
+  --shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Card Styles */
+.card {
+  background: var(--main-bg);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 4px);
+  border-radius: calc(var(--radius) + 4px);
+  box-shadow: var(--shadow);
+  overflow: visible;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.cardHead {
+  padding: 14px 14px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(40, 203, 105, 0.08), transparent);
+  border-radius: calc(var(--radius) + 4px) calc(var(--radius) + 4px) 0 0;
+}
+
+.cardHeadLeft {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.cardIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mc);
+  font-size: 18px;
+}
+
+.cardTitles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cardTitle {
+  font-weight: 800;
+  color: var(--tc);
+  font-size: 14px;
+}
+
+.cardSub {
+  color: var(--ts);
+  font-size: 12px;
+}
+
+.cardHeadRight {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cardBody {
+  padding: 14px;
+}
+
+/* Form Elements */
+.textInput {
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--tc);
+  padding: 0 12px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.textInput:focus {
+  border-color: var(--mc);
+  box-shadow: 0 0 0 4px var(--mc-trans);
+}
+
+.selectWrap {
+  position: relative;
+  display: inline-block;
+  min-width: 140px;
+  width: 100%;
+}
+
+/* The Trigger (looks like input) */
+.select {
+  width: 100%;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--tc);
+  padding: 0 36px 0 12px;
+  outline: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.select:hover {
+  border-color: var(--ts);
+}
+.select.is-open {
+  border-color: var(--mc);
+  box-shadow: 0 0 0 4px var(--mc-trans);
+}
+
+.selectIcon {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  color: var(--ts);
+  pointer-events: none;
+  transition: transform 0.2s;
+}
+.select.is-open + .selectIcon {
+  transform: rotate(180deg);
+  color: var(--mc);
+}
+
+/* The Dropdown Menu */
+.select-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  max-width: 300px;
+  min-width: 100%;
+  border-radius: 12px;
+  background: var(--card-bg); /* Use card-bg which adapts to dark/light */
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  z-index: 1000;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 260px;
+  overflow-y: auto;
+  
+  /* Animation */
+  opacity: 0;
+  transform: translateY(-8px) scale(0.98);
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+html.dark .select-menu {
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+.select-menu.is-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Options */
+.select-opt {
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--tc); 
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Hover & Selected states */
+.select-opt:hover {
+  background: rgba(0,0,0,0.04);
+}
+.select-opt.selected {
+  background: var(--mc-trans);
+  color: var(--mc);
+}
+
+html.dark .select-opt:hover {
+  background: rgba(255,255,255,0.08); /* Better hover for dark mode */
+}
+
+/* Scrollbar styling for the menu */
+.select-menu::-webkit-scrollbar { width: 6px; }
+.select-menu::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
+html.dark .select-menu::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+
+
+/* Filter Bar Styles */
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 160px;
+}
+
+.filter.search {
+  flex: 1;
+  min-width: 220px;
+}
+
+.filterLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ts);
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* Buttons */
+.btn {
+  border: 1px solid var(--border);
+  background: var(--main-bg);
+  color: var(--tc);
+  border-radius: 12px;
+  height: 36px;
+  padding: 0 12px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: .15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.08);
+}
+.btn--primary {
+  background: var(--mc);
+  color: var(--tw);
+  border-color: var(--mc);
+}
+.btn--ghost {
+  background: transparent;
+  border-color: transparent;
+}
+.btn--ghost:hover {
+  background: var(--mc-trans);
+  border-color: transparent;
+  color: var(--mc);
+}
+html.dark .btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--tc);
+}
+/* Checkbox Styles */
+.checkbox-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-input {
+  display: none;
+}
+
+.checkbox-box {
+  width: 16px; /* Smaller size */
+  height: 16px;
+  border-radius: 4px; /* Adjusted radius */
+  border: 1px solid var(--border); /* Thinner border for cleaner look at small size */
+  background: var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 12px; /* Smaller icon */
+}
+
+.checkbox-wrap:hover .checkbox-box {
+  border-color: var(--mc); /* Only border highlight on hover */
+}
+
+.checkbox-box.checked {
+  background: var(--mc);
+  border-color: var(--mc);
+}
+
+.checkbox-box svg {
+  display: block; /* Ensure no extra space */
+}
+
+.checkbox-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tc);
+}
