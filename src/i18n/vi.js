@@ -15,6 +15,8 @@ export const vi = {
     admin: 'Quản trị viên',
     fingerprintPro: 'Fingerprint Pro',
     logout: 'Đăng xuất',
+    language: 'Ngôn ngữ',
+    theme: 'Chế độ giao diện',
     
     // Dashboard sections
     'dashboard.systemOverview': 'Tổng quan hệ thống',

@@ -15,6 +15,8 @@ export const en = {
     admin: 'Admin',
     fingerprintPro: 'Fingerprint Pro',
     logout: 'Logout',
+    language: 'Language',
+    theme: 'Theme Mode',
     
     // Dashboard sections
     'dashboard.systemOverview': 'System Overview',

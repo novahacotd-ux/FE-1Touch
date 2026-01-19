@@ -3,6 +3,7 @@ import AdminLayout from "../features/dashboard/admin/layouts/AdminLayout.jsx";
 import SignIn from "../features/auth/pages/SignIn";
 import TeacherLayout from "../features/dashboard/teacher/layouts/TeacherLayout.jsx";
 import AdminDashboard from "../features/dashboard/admin/pages/AdminDashboard";
+import AdminTeacherTab from "../features/teachers/pages/AdminTeacherTab";
 
 const AppRoutes = () => {
     return (
@@ -10,7 +11,8 @@ const AppRoutes = () => {
             <Route path="/" element={<SignIn />} />
 
             <Route path="/admin" element={<AdminLayout />}>
-                {/* <Route index element={<Dashboard />} /> */}
+                <Route index element={<AdminDashboard />} />
+                <Route path="teachers" element={<AdminTeacherTab />} />
             </Route>
             <Route path="/teacher" element={<TeacherLayout pageTitle="Dashboard" />}>
                 <Route index element={<div className="p-4"><h2>Dashboard</h2><p>Coming soon...</p></div>} />

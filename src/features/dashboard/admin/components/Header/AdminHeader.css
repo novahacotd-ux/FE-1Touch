@@ -72,7 +72,7 @@
     position: absolute;
     top: calc(100% + 8px);
     right: 0;
-    width: 200px;
+    width: 240px;
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -97,6 +97,100 @@
 
 .admin-header-dropdown-item:hover {
     background: var(--mc-trans);
+    color: var(--mc);
+}
+
+/* User Info Section */
+.acc-user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    gap: 5px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 5px;
+}
+
+.acc-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--tc);
+    width: 100%;
+}
+
+.acc-mail {
+    font-size: 13px;
+    color: var(--ts);
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+/* Section Divider */
+.acc-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--tc);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.acc-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 5px;
+}
+
+/* Language Switcher */
+.lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: var(--ts);
+    font-size: 13px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.lang-switcher:hover {
+    background: var(--mc-trans);
+    color: var(--mc);
+}
+
+/* Theme Switcher */
+.switcher {
+    height: 32px;
+    border-radius: 16px;
+    background-color: var(--main-bg);
+    border: 1px solid var(--border);
+    padding: 3px;
+    display: flex;
+    gap: 2px;
+}
+
+.switcher-item {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: var(--ts);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.switcher-item.active {
+    background-color: var(--mc);
+    color: #fff;
+}
+.switcher-item:hover {
     color: var(--mc);
 }
 
