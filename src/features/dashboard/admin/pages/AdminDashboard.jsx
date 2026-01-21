@@ -42,11 +42,7 @@ import MiniStackedBars from "../components/charts/MiniStackedBars";
 import SparklineBinary from "../components/charts/SparklineBinary";
 import CalendarHeatmap from "../components/charts/CalendarHeatmap";
 
-/**
- * AdminDashboard
- * - Refactored: Components split into sub-folders
- * - Uses: data from mocks/dashboardData, helpers from utils/dashboardHelpers
- */
+
 export default function AdminDashboard() {
   // -------------------------
   // Filters (UI only; demo applies to dataset selection)

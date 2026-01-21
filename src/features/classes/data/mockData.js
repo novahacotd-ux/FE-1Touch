@@ -122,7 +122,7 @@ export const MOCK_USERS = [
     email: "ngoc.bui@school.vn",
     phone: "0908000888",
     role: "TEACHER",
-    status: "ACTIVE", // ✅ làm cho dữ liệu “thật” hơn (khớp UNLOCK log)
+    status: "ACTIVE", // làm cho dữ liệu “thật” hơn (khớp UNLOCK log)
     created_at: "2025-09-05 13:20",
     updated_at: "2026-01-03 08:40",
   },

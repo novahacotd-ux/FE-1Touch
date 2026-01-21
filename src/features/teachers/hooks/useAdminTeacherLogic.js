@@ -379,8 +379,8 @@ export default function useAdminTeacherLogic() {
 
     setConfirm({
       title,
-      desc: `${desc}\n\n• Giáo viên: ${row.full_name} (${row.teacher_code})`,
-      actionLabel: nextStatus === "LOCKED" ? "Khóa" : "Mở khóa",
+      description: `${desc}\n\n• Giáo viên: ${row.full_name} (${row.teacher_code})`,
+      confirmLabel: nextStatus === "LOCKED" ? "Khóa" : "Mở khóa",
       onConfirm: () => {
         setUsers((prev) => prev.map((u) => (u.id === row.user_id ? { ...u, status: nextStatus, updated_at: nowStr() } : u)));
         setAuditLogs((prev) => [
@@ -405,8 +405,8 @@ export default function useAdminTeacherLogic() {
     if (!row) return;
     setConfirm({
       title: "Reset mật khẩu?",
-      desc: `Hành động này sẽ tạo mật khẩu mới và ghi audit log.\n\n• Giáo viên: ${row.full_name} (${row.teacher_code})`,
-      actionLabel: "Reset",
+      description: `Hành động này sẽ tạo mật khẩu mới và ghi audit log.\n\n• Giáo viên: ${row.full_name} (${row.teacher_code})`,
+      confirmLabel: "Reset",
       onConfirm: () => {
         setAuditLogs((prev) => [
           {
@@ -436,8 +436,8 @@ export default function useAdminTeacherLogic() {
 
     setConfirm({
       title: "Xóa giáo viên?",
-      desc: `${warn}\n\n• Giáo viên: ${row.full_name} (${row.teacher_code})`,
-      actionLabel: "Xóa",
+      description: `${warn}\n\n• Giáo viên: ${row.full_name} (${row.teacher_code})`,
+      confirmLabel: "Xóa",
       onConfirm: () => {
         setTeacherAssignments((prev) => prev.filter((a) => a.teacher_id !== teacherId));
         setTeacherSubjects((prev) => prev.filter((x) => x.teacher_id !== teacherId));
@@ -463,8 +463,8 @@ export default function useAdminTeacherLogic() {
     if (selectedIds.length === 0) return showToast("warn", "Chưa chọn", "Hãy chọn ít nhất 1 giáo viên.");
     setConfirm({
       title: nextStatus === "LOCKED" ? "Khóa hàng loạt?" : "Mở khóa hàng loạt?",
-      desc: `Áp dụng cho ${selectedIds.length} giáo viên đang chọn.`,
-      actionLabel: nextStatus === "LOCKED" ? "Khóa" : "Mở khóa",
+      description: `Áp dụng cho ${selectedIds.length} giáo viên đang chọn.`,
+      confirmLabel: nextStatus === "LOCKED" ? "Khóa" : "Mở khóa",
       onConfirm: () => {
         const userIds = teacherRows.filter((r) => selectedIds.includes(r.teacher_id)).map((r) => r.user_id);
         setUsers((prev) => prev.map((u) => (userIds.includes(u.id) ? { ...u, status: nextStatus, updated_at: nowStr() } : u)));

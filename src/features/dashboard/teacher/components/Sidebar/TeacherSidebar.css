@@ -1,7 +1,3 @@
-/* ===================================
-   DASHBOARD STYLES
-   Adapted from signed-in interface
-   =================================== */
 
 /* Sidebar Styles */
 .sidebar {
@@ -813,10 +809,6 @@
     margin: auto;
     max-width: 50px;
 }
-
-/* ===================================
-   MENU TOGGLE & SIDEBAR STATE STYLES
-   =================================== */
 
 /* Menu Toggle Button - Desktop Collapse */
 

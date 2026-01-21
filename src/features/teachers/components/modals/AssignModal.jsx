@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { FiPlus, FiTrash2 } from "react-icons/fi";
 import Modal from "./Modal";
 
+import Select from "../../../dashboard/admin/components/ui/Select";
+
 export default function AssignModal({ teacherId, teacherRows, subjects, classes, teacherAssignments, onClose, onAdd, onRemove }) {
   const row = teacherRows.find((r) => r.teacher_id === teacherId);
 
@@ -12,38 +14,46 @@ export default function AssignModal({ teacherId, teacherRows, subjects, classes,
 
   const assigns = teacherAssignments.filter((a) => a.teacher_id === teacherId);
 
+  // Options
+  const classOptions = classes.map(c => ({ value: c.id, label: c.name }));
+  const subjectOptions = subjects.map(s => ({ value: s.id, label: `${s.code} — ${s.name}` }));
+  const roleOptions = [
+    { value: "SUBJECT", label: "SUBJECT (GV bộ môn)" },
+    { value: "HOMEROOM", label: "HOMEROOM (GVCN)" }
+  ];
+
   return (
     <Modal onClose={onClose} title={`Phân công giảng dạy • ${row?.full_name || ""}`}>
       <div className="at-assignModal">
         <div className="at-assignForm">
           <label className="at-field">
             <span>Lớp</span>
-            <select value={classId} onChange={(e) => setClassId(e.target.value)}>
-              {classes.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
+            <Select 
+                value={classId} 
+                onChange={(val) => setClassId(val)} 
+                options={classOptions} 
+                className="at-select"
+            />
           </label>
 
           <label className="at-field">
             <span>Môn</span>
-            <select value={subjectId} onChange={(e) => setSubjectId(e.target.value)}>
-              {subjects.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.code} — {s.name}
-                </option>
-              ))}
-            </select>
+            <Select 
+                value={subjectId} 
+                onChange={(val) => setSubjectId(val)} 
+                options={subjectOptions} 
+                className="at-select"
+            />
           </label>
 
           <label className="at-field">
             <span>Vai trò</span>
-            <select value={role} onChange={(e) => setRole(e.target.value)}>
-              <option value="SUBJECT">SUBJECT (GV bộ môn)</option>
-              <option value="HOMEROOM">HOMEROOM (GVCN)</option>
-            </select>
+            <Select 
+                value={role} 
+                onChange={(val) => setRole(val)} 
+                options={roleOptions} 
+                className="at-select"
+            />
           </label>
 
           <button
