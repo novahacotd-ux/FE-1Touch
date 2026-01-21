@@ -1,12 +1,14 @@
 import React from 'react';
 import { FiSearch } from "react-icons/fi";
 
-export default function SearchInput({ value, onChange, placeholder = "Tìm kiếm...", className = "", style = {} }) {
+export default function SearchInput({ value, onChange, placeholder = "Tìm kiếm...", label = "Tìm kiếm", className = "", style = {} }) {
   return (
     <div className={`filter search ${className}`} style={style}>
-      <div className="filterLabel">
-        <FiSearch /> Tìm kiếm
-      </div>
+      {label && (
+        <div className="filterLabel">
+          <FiSearch /> {label}
+        </div>
+      )}
       <input
         type="text"
         className="textInput"

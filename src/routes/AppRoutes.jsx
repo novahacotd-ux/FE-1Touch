@@ -5,6 +5,7 @@ import TeacherLayout from "../features/dashboard/teacher/layouts/TeacherLayout.j
 import AdminDashboard from "../features/dashboard/admin/pages/AdminDashboard";
 import AdminTeacherTab from "../features/teachers/pages/AdminTeacherTab";
 import AdminClasses from "../features/classes/pages/AdminClasses";
+import AdminStudents from "../features/students/pages/AdminStudents";
 
 const AppRoutes = () => {
     return (
@@ -15,6 +16,7 @@ const AppRoutes = () => {
                 <Route index element={<AdminDashboard />} />
                 <Route path="teachers" element={<AdminTeacherTab />} />
                 <Route path="classes" element={<AdminClasses />} />
+                <Route path="students" element={<AdminStudents />} />
             </Route>
             <Route path="/teacher" element={<TeacherLayout pageTitle="Dashboard" />}>
                 <Route index element={<div className="p-4"><h2>Dashboard</h2><p>Coming soon...</p></div>} />

@@ -398,3 +398,34 @@ html.dark .btn--ghost:hover {
   cursor:pointer;
 }
 .modalClose:hover{ background: rgba(0,0,0,.05); color: var(--tc); }
+
+/* Pagination Shared */
+.pagi-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--tc);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.pagi-btn:hover:not(:disabled) {
+  background: rgba(40, 203, 105, .10);
+  border-color: rgba(40, 203, 105, .35);
+  color: var(--mc);
+  transform: translateY(-1px);
+}
+.pagi-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.pagi-text {
+  font-size: 13px;
+  color: var(--ts);
+  font-weight: 500;
+}
+

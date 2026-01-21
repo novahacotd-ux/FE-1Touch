@@ -27,7 +27,7 @@ export function useAdminClassesLogic() {
   const [roles] = useState(MOCK_STUDENT_ROLES);
   const [auditLogs, setAuditLogs] = useState(MOCK_AUDIT_LOGS);
 
-  // ✅ để giữ “lớp cũ vẫn xem lại thành viên” sau khi chuyển năm học
+  // để giữ “lớp cũ vẫn xem lại thành viên” sau khi chuyển năm học
   const [archivedMembers, setArchivedMembers] = useState({});
 
   /** filters */

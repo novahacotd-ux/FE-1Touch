@@ -46,12 +46,7 @@ import TeacherDrawerContent from "../components/drawers/TeacherDrawerContent";
 import TeacherUpsertModal from "../components/modals/TeacherUpsertModal";
 import AssignModal from "../components/modals/AssignModal";
 import TeacherFilterBar from "../components/ui/TeacherFilterBar";
-
-/**
- * Admin Teacher Tab
- * - Refactored to use useAdminTeacherLogic hook.
- * - Purely presentation (mostly).
- */
+import Pagination from "../../dashboard/admin/components/ui/Pagination";
 
 export default function AdminTeacherTab() {
   const {
@@ -119,8 +114,8 @@ export default function AdminTeacherTab() {
         onClose={() => setConfirm(null)}
         onConfirm={confirm?.onConfirm}
         title={confirm?.title}
-        description={confirm?.desc}
-        confirmLabel={confirm?.actionLabel}
+        description={confirm?.description}
+        confirmLabel={confirm?.confirmLabel}
       />
 
       {/* Upsert Teacher */}
@@ -284,8 +279,8 @@ export default function AdminTeacherTab() {
             </thead>
             <tbody>
               {pagedRows.map((r) => (
-                <tr key={r.teacher_id}>
-                  <td style={{ paddingLeft: 14 }}>
+                <tr key={r.teacher_id} onClick={() => setDrawerTeacherId(r.teacher_id)} style={{ cursor: "pointer" }}>
+                  <td style={{ paddingLeft: 14 }} onClick={(e) => e.stopPropagation()}>
                     <Checkbox 
                       checked={selectedIds.includes(r.teacher_id)} 
                       onChange={() => toggleSelect(r.teacher_id)} 
@@ -359,11 +354,8 @@ export default function AdminTeacherTab() {
                     <div className="at-last">{r.lastAction}</div>
                   </td>
 
-                  <td>
+                  <td onClick={(e) => e.stopPropagation()}>
                     <div className="at-actions">
-                      <button className="at-iconBtn at-iconBtn--view" title="Xem" onClick={() => setDrawerTeacherId(r.teacher_id)}>
-                        <FiEye />
-                      </button>
                       <button className="at-iconBtn at-iconBtn--edit" title="Sửa" onClick={() => openEdit(r.teacher_id)}>
                         <FiEdit2 />
                       </button>
@@ -404,19 +396,13 @@ export default function AdminTeacherTab() {
           </table>
         </div>
 
-        {/* Pagination */}
-        <div className="at-paging">
-          <div className="at-paging__left">
-            Trang <b>{Math.min(page, totalPages)}</b> / {totalPages}
-          </div>
-          <div className="at-paging__right">
-            <button className="at-btn at-btn--ghost" onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page <= 1}>
-              Prev
-            </button>
-            <button className="at-btn at-btn--ghost" onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page >= totalPages}>
-              Next
-            </button>
-          </div>
+        {/* Pagination Shared Component */}
+        <div className="at-paging" style={{ borderTop: "1px solid var(--border)", paddingTop: "14px" }}>
+           <Pagination 
+             page={page} 
+             totalPages={totalPages} 
+             onPageChange={setPage} 
+           />
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 // AdminClasses.jsx
-// ✅ Refactored: Split into components + hook + styles
+// Refactored: Split into components + hook + styles
 
 import React from "react";
 import {
@@ -35,7 +35,7 @@ import ConfirmModal from "../../dashboard/admin/components/ui/ConfirmModal";
 // Local Feature Modules
 import "../styles/AdminClasses.css";
 import { useAdminClassesLogic } from "../hooks/useAdminClassesLogic";
-import { clamp, nowStr, uid, normalize } from "../utils/classHelpers";
+import { nowStr, uid, normalize } from "../utils/classHelpers";
 
 // Components
 import Chip from "../components/ui/Chip";
@@ -46,6 +46,7 @@ import ClassActionableStats from "../components/stats/ClassActionableStats";
 import ClassRoster from "../components/ClassRoster";
 import ClassFormModal from "../components/modals/ClassFormModal";
 import PromoteYearWizard from "../components/PromoteYearWizard";
+import Pagination from "../../dashboard/admin/components/ui/Pagination";
 
 export default function AdminClasses() {
   const {
@@ -164,107 +165,129 @@ export default function AdminClasses() {
       {/* Actionable Stats Panels (New) */}
       <ClassActionableStats stats={actionableStats} onAction={handleStatsAction} />
 
-      <div className="clm-filters" style={{ marginBottom: 20 }}>
-        <div className="clm-filters__row">
-          <Select
-            value={yearId}
-            onChange={setYearId}
-            options={years.map((y) => ({ value: y.id, label: y.name + (y.is_current ? " • (current)" : "") }))}
-            placeholder="Năm học"
-            className="clm-sel"
-          />
+      <div className="card">
+        <div className="cardBody">
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'flex-end' }}>
+            {/* Search */}
+            <div style={{ flex: '1 1 250px' }}>
+                <div className="filterLabel" style={{ marginBottom: 4, fontWeight: 600, fontSize: 12, color: 'var(--ts)' }}>Tìm kiếm</div>
+                <SearchInput 
+                  value={q} 
+                  onChange={setQ} 
+                  placeholder="VD: 10A1, 11B2..." 
+                  className="clm-search" 
+                  label={null}
+                />
+            </div>
 
-          <Select
-            value={gradeId}
-            onChange={setGradeId}
-            options={[
-              { value: "ALL", label: "Tất cả khối" },
-              ...grades.map((g) => ({ value: g.id, label: `Khối ${g.grade_name}` })),
-            ]}
-            placeholder="Khối"
-            className="clm-sel"
-          />
+            <div className="filter">
+               <div className="filterLabel" style={{ marginBottom: 4, fontWeight: 600, fontSize: 12, color: 'var(--ts)' }}>Năm học</div>
+               <Select
+                  value={yearId}
+                  onChange={setYearId}
+                  options={years.map((y) => ({ value: y.id, label: y.name + (y.is_current ? " • (current)" : "") }))}
+                  placeholder="Năm học"
+                  className="clm-sel"
+               />
+            </div>
 
-          <Select
-            value={status}
-            onChange={setStatus}
-            options={[
-              { value: "ALL", label: "Tất cả trạng thái" },
-              { value: "OPEN", label: "OPEN" },
-              { value: "CLOSED", label: "CLOSED" },
-            ]}
-            placeholder="Trạng thái"
-            className="clm-sel"
-          />
+            <div className="filter">
+               <div className="filterLabel" style={{ marginBottom: 4, fontWeight: 600, fontSize: 12, color: 'var(--ts)' }}>Khối</div>
+               <Select
+                  value={gradeId}
+                  onChange={setGradeId}
+                  options={[
+                    { value: "ALL", label: "Tất cả khối" },
+                    ...grades.map((g) => ({ value: g.id, label: `Khối ${g.grade_name}` })),
+                  ]}
+                  placeholder="Khối"
+                  className="clm-sel"
+               />
+            </div>
 
-          <SearchInput value={q} onChange={setQ} placeholder="VD: 10A1, 11B2..." className="clm-search" />
-        </div>
+            <div className="filter">
+               <div className="filterLabel" style={{ marginBottom: 4, fontWeight: 600, fontSize: 12, color: 'var(--ts)' }}>Trạng thái</div>
+               <Select
+                  value={status}
+                  onChange={setStatus}
+                  options={[
+                    { value: "ALL", label: "Tất cả trạng thái" },
+                    { value: "OPEN", label: "OPEN" },
+                    { value: "CLOSED", label: "CLOSED" },
+                  ]}
+                  placeholder="Trạng thái"
+                  className="clm-sel"
+               />
+            </div>
 
-        <div className="clm-filters__row clm-filters__row--sub" style={{ marginTop: 12 }}>
-          <Checkbox
-            label="Chỉ lớp thiếu GVCN"
-            checked={onlyNoHomeroom}
-            onChange={(e) => setOnlyNoHomeroom(e.target.checked)}
-          />
+            <div className="filter">
+               <div className="filterLabel" style={{ marginBottom: 4, fontWeight: 600, fontSize: 12, color: 'var(--ts)' }}>Tùy chọn</div>
+               <div style={{ display: 'flex', gap: '16px', alignItems: 'center', height: 40 }}>
+                  <Checkbox
+                    label="Thiếu GVCN"
+                    checked={onlyNoHomeroom}
+                    onChange={(e) => setOnlyNoHomeroom(e.target.checked)}
+                  />
+                  <Checkbox
+                    label="Vượt sĩ số"
+                    checked={onlyOverCap}
+                    onChange={(e) => setOnlyOverCap(e.target.checked)}
+                  />
+                  
+                  <div className={`clm-cap ${onlyOverCap ? "" : "clm-cap--disabled"}`} style={{ display: "flex", alignItems: "center", gap: 8, opacity: onlyOverCap ? 1 : 0.5, transition: "opacity .2s", marginLeft: 8 }}>
+                    <span className="clm-cap__lb" style={{ fontSize: 12, fontWeight: 600, color: "var(--ts)", whiteSpace: 'nowrap' }}>Ngưỡng ({capSize})</span>
+                    <input
+                      className="clm-cap__rng"
+                      type="range"
+                      min={25}
+                      max={55}
+                      value={capSize}
+                      disabled={!onlyOverCap}
+                      onChange={(e) => setCapSize(parseInt(e.target.value, 10))}
+                      style={{
+                        width: 100,
+                        height: 4,
+                        borderRadius: 4,
+                        background: `linear-gradient(to right, var(--mc) 0%, var(--mc) ${((capSize - 25) / (55 - 25)) * 100}%, var(--border) ${((capSize - 25) / (55 - 25)) * 100}%, var(--border) 100%)`
+                      }}
+                    />
+                  </div>
+               </div>
+            </div>
 
-          <Checkbox
-            label="Chỉ lớp vượt sĩ số"
-            checked={onlyOverCap}
-            onChange={(e) => setOnlyOverCap(e.target.checked)}
-          />
-
-          <div className={`clm-cap ${onlyOverCap ? "" : "clm-cap--disabled"}`} style={{ display: "flex", alignItems: "center", gap: 8, opacity: onlyOverCap ? 1 : 0.5, transition: "opacity .2s" }}>
-            <span className="clm-cap__lb" style={{ fontSize: 13, fontWeight: 600, color: "var(--ts)" }}>Ngưỡng:</span>
-            <input
-              className="clm-cap__rng"
-              type="range"
-              min={25}
-              max={55}
-              value={capSize}
-              disabled={!onlyOverCap}
-              onChange={(e) => setCapSize(parseInt(e.target.value, 10))}
-              style={{
-                width: 100,
-                height: 4,
-                borderRadius: 4,
-                background: `linear-gradient(to right, var(--mc) 0%, var(--mc) ${((capSize - 25) / (55 - 25)) * 100}%, var(--border) ${((capSize - 25) / (55 - 25)) * 100}%, var(--border) 100%)`
-              }}
-            />
-            <span className="clm-cap__val" style={{ fontSize: 13, fontWeight: 700, color: "var(--mc)", width: 20 }}>{capSize}</span>
+            <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', height: 40, alignSelf: 'flex-end', paddingBottom: 2 }}>
+               <Button
+                  variant="ghost"
+                  leftIcon={<FiRefreshCcw />}
+                  onClick={() => {
+                    setGradeId("ALL");
+                    setStatus("ALL");
+                    setQ("");
+                    setOnlyNoHomeroom(false);
+                    setOnlyOverCap(false);
+                    setCapSize(45);
+                    pushToast("Đã reset bộ lọc", "info");
+                  }}
+               >
+                  Reset filter
+               </Button>
+            </div>
           </div>
-
-          <div className="clm-spacer" style={{ flex: 1 }} />
-
-          <Button
-            variant="ghost"
-            leftIcon={<FiRefreshCcw />}
-            onClick={() => {
-              setGradeId("ALL");
-              setStatus("ALL");
-              setQ("");
-              setOnlyNoHomeroom(false);
-              setOnlyOverCap(false);
-              setCapSize(45);
-              pushToast("Đã reset bộ lọc", "info");
-            }}
-          >
-            Reset filter
-          </Button>
-        </div>
-
-        <div className="clm-filters__foot" style={{ marginTop: 12, display: "flex", justifyContent: "space-between", fontSize: 13, paddingTop: 12, borderTop: "1px dashed var(--border)" }}>
-          <span className="clm-muted">
-            Hiển thị <b>{filteredClasses.length}</b> lớp (trong năm học {selectedYear?.name || "—"})
-          </span>
-          {overview.missingHomeroom > 0 ? (
-            <span className="clm-warnLine" style={{ color: "var(--warn)", display: "flex", alignItems: "center", gap: 6 }}>
-              <FiAlertTriangle /> Có <b>{overview.missingHomeroom}</b> lớp chưa gán GVCN — nên xử lý trước khi xếp TKB/điểm danh.
+          
+          <div className="clm-filters__foot" style={{ marginTop: 16, display: "flex", justifyContent: "space-between", fontSize: 13, paddingTop: 12, borderTop: "1px dashed var(--border)" }}>
+            <span className="clm-muted">
+              Hiển thị <b>{filteredClasses.length}</b> lớp (trong năm học {selectedYear?.name || "—"})
             </span>
-          ) : (
-            <span className="clm-okLine" style={{ color: "var(--good)", display: "flex", alignItems: "center", gap: 6 }}>
-              <FiCheck /> Tất cả lớp đã có GVCN.
-            </span>
-          )}
+            {overview.missingHomeroom > 0 ? (
+              <span className="clm-warnLine" style={{ color: "var(--warn)", display: "flex", alignItems: "center", gap: 6 }}>
+                <FiAlertTriangle /> Có <b>{overview.missingHomeroom}</b> lớp chưa gán GVCN — nên xử lý trước khi xếp TKB/điểm danh.
+              </span>
+            ) : (
+              <span className="clm-okLine" style={{ color: "var(--good)", display: "flex", alignItems: "center", gap: 6 }}>
+                <FiCheck /> Tất cả lớp đã có GVCN.
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
@@ -274,17 +297,7 @@ export default function AdminClasses() {
         icon={<FiList />}
         right={
           <div className="clm-card__actions" style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <span className="clm-muted" style={{ fontSize: 13 }}>
-              Trang <b>{page}</b> / <b>{totalPages}</b>
-            </span>
-            <div className="clm-pagi" style={{ display: "flex", gap: 4 }}>
-              <IconButton title="Prev" onClick={() => setPage((p) => clamp(p - 1, 1, totalPages))}>
-                <FiChevronUp style={{ transform: "rotate(-90deg)" }} />
-              </IconButton>
-              <IconButton title="Next" onClick={() => setPage((p) => clamp(p + 1, 1, totalPages))}>
-                <FiChevronDown style={{ transform: "rotate(-90deg)" }} />
-              </IconButton>
-            </div>
+            {/* Pagination removed */}
           </div>
         }
       >
@@ -398,8 +411,8 @@ export default function AdminClasses() {
                             onClick={() =>
                               setConfirm({
                                 title: "Đóng lớp học",
-                                desc: `Bạn có chắc chắn muốn đóng lớp ${c.class_name}?`,
-                                actionLabel: "Đóng lớp",
+                                description: `Bạn có chắc chắn muốn đóng lớp ${c.class_name}?`,
+                                confirmLabel: "Đóng lớp",
                                 onConfirm: () => {
                                   setClassStatus(c.id, "CLOSED");
                                   setConfirm(null);
@@ -415,8 +428,8 @@ export default function AdminClasses() {
                             onClick={() =>
                               setConfirm({
                                 title: "Mở lớp học",
-                                desc: `Bạn có chắc chắn muốn mở lại lớp ${c.class_name}?`,
-                                actionLabel: "Mở lớp",
+                                description: `Bạn có chắc chắn muốn mở lại lớp ${c.class_name}?`,
+                                confirmLabel: "Mở lớp",
                                 onConfirm: () => {
                                   setClassStatus(c.id, "OPEN");
                                   setConfirm(null);
@@ -465,18 +478,8 @@ export default function AdminClasses() {
           </div>
         </div>
 
-        <div className="clm-tableFoot" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 16 }}>
-          <div className="clm-muted" style={{ fontSize: 13 }}>
-            Tip: Expand lớp để xem nhanh danh sách HS + đổi chức vụ lớp trưởng/lớp phó.
-          </div>
-          <div className="clm-pagi2" style={{ display: "flex", gap: 10 }}>
-            <Button variant="ghost" size="sm" onClick={() => setPage((p) => clamp(p - 1, 1, totalPages))}>
-              Prev
-            </Button>
-            <Button variant="ghost" size="sm" onClick={() => setPage((p) => clamp(p + 1, 1, totalPages))}>
-              Next
-            </Button>
-          </div>
+        <div className="clm-tableFoot" style={{ marginTop: 16 }}>
+           <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
         </div>
       </Card>
 
@@ -486,8 +489,8 @@ export default function AdminClasses() {
         onClose={() => setConfirm(null)}
         onConfirm={confirm?.onConfirm}
         title={confirm?.title}
-        description={confirm?.desc}
-        confirmLabel={confirm?.actionLabel}
+        description={confirm?.description}
+        confirmLabel={confirm?.confirmLabel}
       />
 
       <ClassFormModal

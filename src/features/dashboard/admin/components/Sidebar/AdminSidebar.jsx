@@ -7,12 +7,13 @@ import {
     FiUsers,
     FiBook,
     FiLayers,
-    FiClipboard,
+    FiClipboard,    
     FiCalendar,
     FiSettings,
     FiBarChart2,
     FiFileText,
     FiMenu,
+    FiUser,
 } from 'react-icons/fi';
 
 const AdminSidebar = () => {
@@ -23,6 +24,7 @@ const AdminSidebar = () => {
         { key: 'dashboard', path: '/admin', label: t('dashboard'), icon: <FiHome />, end: true },
         { key: 'teacher', path: '/admin/teachers', label: t('teacher'), icon: <FiUsers /> },
         { key: 'classes', path: '/admin/classes', label: t('classes'), icon: <FiBook /> },
+        { key: 'students', path: '/admin/students', label: t('students'), icon: <FiUser /> },
         { key: 'timetable', path: '/admin/timetable', label: t('timetable'), icon: <FiCalendar /> },
         { key: 'systemConfig', path: '/admin/systemConfig', label: t('systemConfig'), icon: <FiSettings /> },
         { key: 'auditLogs', path: '/admin/auditLogs', label: t('auditLogs'), icon: <FiFileText /> }
