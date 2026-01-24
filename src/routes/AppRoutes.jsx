@@ -8,6 +8,9 @@ import TeacherDashboard from "../features/dashboard/teacher/pages/TeacherDashboa
 import Schedule from "../features/dashboard/teacher/pages/Schedule.jsx";
 import TeachingClasses from "../features/dashboard/teacher/pages/TeachingClasses.jsx";
 import ClassDetail from "../features/dashboard/teacher/pages/ClassDetail.jsx";
+import AdminTeacherTab from "../features/teachers/pages/AdminTeacherTab";
+import AdminClasses from "../features/classes/pages/AdminClasses";
+import AdminStudents from "../features/students/pages/AdminStudents";
 
 const AppRoutes = () => {
     return (
@@ -15,7 +18,10 @@ const AppRoutes = () => {
             <Route path="/" element={<SignIn />} />
 
             <Route path="/admin" element={<AdminLayout />}>
-                {/* <Route index element={<Dashboard />} /> */}
+                <Route index element={<AdminDashboard />} />
+                <Route path="teachers" element={<AdminTeacherTab />} />
+                <Route path="classes" element={<AdminClasses />} />
+                <Route path="students" element={<AdminStudents />} />
             </Route>
             <Route path="/teacher" element={<TeacherLayout pageTitle="Dashboard" />}>
                 <Route index element={<TeacherDashboard />} />

@@ -7,12 +7,13 @@ import {
     FiUsers,
     FiBook,
     FiLayers,
-    FiClipboard,
+    FiClipboard,    
     FiCalendar,
     FiSettings,
     FiBarChart2,
     FiFileText,
     FiMenu,
+    FiUser,
 } from 'react-icons/fi';
 
 const AdminSidebar = () => {
@@ -20,14 +21,12 @@ const AdminSidebar = () => {
     const { t } = useLanguage();
     
     const menu = [
-        { key: 'dashboard', path: '/admin', label: t('dashboard'), icon: <FiHome /> },
-        { key: 'teacher', path: '/admin/teacher', label: t('teacher'), icon: <FiUsers /> },
+        { key: 'dashboard', path: '/admin', label: t('dashboard'), icon: <FiHome />, end: true },
+        { key: 'teacher', path: '/admin/teachers', label: t('teacher'), icon: <FiUsers /> },
         { key: 'classes', path: '/admin/classes', label: t('classes'), icon: <FiBook /> },
-        { key: 'subject', path: '/admin/subject', label: t('subject'), icon: <FiLayers /> },
-        { key: 'assignments', path: '/admin/assignments', label: t('assignments'), icon: <FiClipboard /> },
+        { key: 'students', path: '/admin/students', label: t('students'), icon: <FiUser /> },
         { key: 'timetable', path: '/admin/timetable', label: t('timetable'), icon: <FiCalendar /> },
         { key: 'systemConfig', path: '/admin/systemConfig', label: t('systemConfig'), icon: <FiSettings /> },
-        { key: 'statistics', path: '/admin/statistics', label: t('statistics'), icon: <FiBarChart2 /> },
         { key: 'auditLogs', path: '/admin/auditLogs', label: t('auditLogs'), icon: <FiFileText /> }
     ]
     return (
@@ -47,6 +46,7 @@ const AdminSidebar = () => {
                     <NavLink
                         key={item.key}
                         to={item.path}
+                        end={item.end}
                         className={({ isActive }) =>
                             `admin-sidebar-menu-item ${isActive ? 'active' : ''}`
                         }

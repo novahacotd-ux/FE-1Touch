@@ -43,7 +43,7 @@ const TeacherHeader = ({ onMenuToggle, pageTitle = 'Dashboard' }) => {
     };
 
     return (
-        <div className="dashboard-hd">
+        <div className="dashboard-hd teacher-header-scope">
             <div className="header-row">
                 {/* Mobile Menu Toggle */}
                 <button

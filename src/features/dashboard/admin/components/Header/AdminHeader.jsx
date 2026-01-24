@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const AdminHeader = () => {
-    const { theme, toggleTheme } = useTheme();
+    const { theme, setLight, setDark } = useTheme();
     const { language, toggleLanguage, t } = useLanguage();
     const [showDrp, setShowDrp] = useState(false);
     const navigate = useNavigate();
@@ -25,22 +25,6 @@ const AdminHeader = () => {
             </div>
 
             <div className="admin-header-right">
-                <button 
-                    className="admin-header-icon-btn"
-                    aria-label="Change language"
-                    onClick={toggleLanguage}>
-                    <span style={{ fontSize: '14px', fontWeight: 600 }}>
-                        {language === 'en' ? 'EN' : 'VI'}
-                    </span>
-                </button>
-
-                <button 
-                    className="admin-header-icon-btn"
-                    aria-label="Toggle theme"
-                    onClick={toggleTheme}>
-                    {theme === 'dark' ? <FiSun /> : <FiMoon />}
-                </button>
-
                 <div className="admin-header-user-wrapper">
                     <div 
                         className="admin-header-user"
@@ -53,7 +37,43 @@ const AdminHeader = () => {
 
                     {showDrp && (
                         <div className="admin-header-dropdown">
-                            <div className="admin-header-dropdown-item" onClick={handleLogout}>
+                            {/* User Info */}
+                            <div className="acc-user">
+                                <span className="acc-name">{t('admin')}</span>
+                                <span className="acc-mail">admin@example.com</span>
+                            </div>
+
+                            {/* Language Switcher */}
+                            <div className="acc-section">
+                                <span>{t('language')}</span>
+                                <div className="lang-switcher" onClick={toggleLanguage}>
+                                    <span>{language === 'en' ? 'English' : 'Tiếng Việt'}</span>
+                                    <FiGlobe />
+                                </div>
+                            </div>
+
+                            {/* Theme Mode Switcher */}
+                            <div className="acc-section">
+                                <span>{t('theme')}</span>
+                                <div className="switcher">
+                                    <button
+                                        className={`switcher-item ${theme === 'light' ? 'active' : ''}`}
+                                        onClick={setLight}
+                                        aria-label="Light"
+                                    >
+                                        <FiSun />
+                                    </button>
+                                    <button
+                                        className={`switcher-item ${theme === 'dark' ? 'active' : ''}`}
+                                        onClick={setDark}
+                                        aria-label="Dark"
+                                    >
+                                        <FiMoon />
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="admin-header-dropdown-item" onClick={handleLogout} style={{ marginTop: '5px' }}>
                                 <FiLogOut />
                                 <span>{t('logout')}</span>
                             </div>
