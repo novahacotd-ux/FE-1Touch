@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import AdminHeader from "../components/Header/AdminHeader";
 import AdminSidebar from "../components/Sidebar/AdminSidebar";
 import './AdminLayout.css';
+import AdminDashboard from "../pages/AdminDashboard";
 
 const AdminLayout = () => {
     return (
@@ -10,7 +11,7 @@ const AdminLayout = () => {
             <div className="admin-layout-main">
                 <AdminHeader />
                 <div className="admin-layout-content">
-                    <Outlet />
+                    <AdminDashboard />
                 </div>
             </div>
         </div>

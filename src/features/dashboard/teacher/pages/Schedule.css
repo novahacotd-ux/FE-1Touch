@@ -1,0 +1,540 @@
+/* ===================================
+   SCHEDULE PAGE STYLES
+   =================================== */
+
+/* Schedule Header */
+.schedule-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.schedule-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.schedule-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--tc);
+    margin: 0;
+}
+
+.schedule-title i {
+    color: var(--mc);
+    font-size: 24px;
+}
+
+.schedule-subtitle {
+    padding: 6px 14px;
+    background: var(--mc-trans);
+    color: var(--mc);
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.schedule-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.control-group label {
+    font-size: 14px;
+    color: var(--ts);
+    white-space: nowrap;
+}
+
+.control-group .form-select {
+    min-width: 160px;
+    height: 42px;
+}
+
+/* View Toggle */
+.view-toggle {
+    display: flex;
+    background: var(--second-bg);
+    border-radius: 10px;
+    padding: 4px;
+    border: 1px solid var(--border);
+}
+
+.toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    color: var(--ts);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.toggle-btn:hover {
+    color: var(--tc);
+}
+
+.toggle-btn.active {
+    background: var(--mc);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(var(--mc-rgb), 0.3);
+}
+
+.toggle-btn i {
+    font-size: 14px;
+}
+
+/* Day Selector */
+.day-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.day-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 20px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 80px;
+    position: relative;
+}
+
+.day-btn:hover {
+    border-color: var(--mc);
+    transform: translateY(-2px);
+}
+
+.day-btn.active {
+    background: var(--mc);
+    border-color: var(--mc);
+    color: #fff;
+}
+
+.day-btn.today:not(.active) {
+    border-color: var(--mc);
+    background: var(--mc-trans);
+}
+
+.day-btn .day-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.day-btn .day-date {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.day-btn .today-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #10b981;
+    color: #fff;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+/* Timetable Grid */
+.timetable-grid {
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.timetable-wrapper {
+    overflow-x: auto;
+}
+
+.timetable-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+.timetable-table th,
+.timetable-table td {
+    border: 1px solid var(--border);
+    padding: 12px;
+    text-align: center;
+    vertical-align: top;
+}
+
+.time-header {
+    background: var(--second-bg);
+    width: 100px;
+    font-weight: 600;
+    color: var(--tc);
+}
+
+.day-header {
+    background: var(--second-bg);
+    min-width: 120px;
+    padding: 16px 12px !important;
+}
+
+.day-header.today {
+    background: var(--mc-trans);
+}
+
+.day-header .header-day {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--tc);
+}
+
+.day-header .header-date {
+    display: block;
+    font-size: 12px;
+    color: var(--ts);
+    margin-top: 4px;
+}
+
+.day-header.today .header-day,
+.day-header.today .header-date {
+    color: var(--mc);
+}
+
+.time-cell {
+    background: var(--second-bg);
+    width: 100px;
+}
+
+.period-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.period-info .period-name {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--tc);
+}
+
+.period-info .period-time {
+    font-size: 11px;
+    color: var(--ts);
+}
+
+.lesson-cell {
+    height: 80px;
+    background: var(--card-bg);
+    transition: all 0.2s ease;
+}
+
+.lesson-cell.today {
+    background: rgba(var(--mc-rgb), 0.03);
+}
+
+.lesson-cell.has-lesson:hover {
+    background: var(--mc-trans);
+}
+
+.lesson-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    background: linear-gradient(135deg, var(--mc) 0%, rgba(var(--mc-rgb), 0.8) 100%);
+    border-radius: 8px;
+    color: #fff;
+    height: 100%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.lesson-card:hover {
+    transform: scale(1.02);
+}
+
+.lesson-card .lesson-subject {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.lesson-card .lesson-class {
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.lesson-card .lesson-room {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    opacity: 0.8;
+    margin-top: auto;
+}
+
+.lesson-card .lesson-room i {
+    font-size: 10px;
+}
+
+/* Day Schedule (Day View) */
+.day-schedule {
+    margin-bottom: 20px;
+}
+
+.day-lessons-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.day-lesson-item {
+    display: flex;
+    gap: 20px;
+    padding: 16px 20px;
+    border-radius: var(--radius);
+    background: var(--second-bg);
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+}
+
+.day-lesson-item:hover {
+    border-color: var(--mc);
+}
+
+.day-lesson-item.has-lesson {
+    border-left: 4px solid var(--mc);
+}
+
+.day-lesson-item.free {
+    opacity: 0.6;
+    border-style: dashed;
+}
+
+.lesson-time {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100px;
+    padding-right: 20px;
+    border-right: 2px solid var(--border);
+}
+
+.lesson-time .period-number {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--tc);
+}
+
+.lesson-time .period-hours {
+    font-size: 12px;
+    color: var(--ts);
+    margin-top: 4px;
+}
+
+.day-lesson-item .lesson-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.lesson-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.subject-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--tc);
+}
+
+.class-badge {
+    padding: 4px 12px;
+    background: var(--mc);
+    color: #fff;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.lesson-meta {
+    display: flex;
+    gap: 16px;
+}
+
+.room-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--ts);
+}
+
+.room-info i {
+    color: var(--mc);
+}
+
+.free-text {
+    font-size: 14px;
+    color: var(--ts);
+    font-style: italic;
+}
+
+/* Schedule Stats */
+.schedule-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.stat-card .stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--mc-trans);
+    color: var(--mc);
+    font-size: 20px;
+}
+
+.stat-card .stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-card .stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--tc);
+}
+
+.stat-card .stat-label {
+    font-size: 13px;
+    color: var(--ts);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .schedule-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .schedule-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 768px) {
+    .schedule-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .control-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .control-group .form-select {
+        width: 100%;
+    }
+
+    .view-toggle {
+        justify-content: center;
+    }
+
+    .schedule-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .timetable-table th,
+    .timetable-table td {
+        padding: 8px;
+    }
+
+    .lesson-card {
+        padding: 6px;
+    }
+
+    .lesson-card .lesson-subject {
+        font-size: 12px;
+    }
+
+    .lesson-card .lesson-class {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .day-btn {
+        min-width: 60px;
+        padding: 10px 12px;
+    }
+
+    .day-btn .day-name {
+        font-size: 12px;
+    }
+
+    .day-btn .day-date {
+        font-size: 10px;
+    }
+
+    .day-lesson-item {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .lesson-time {
+        flex-direction: row;
+        justify-content: space-between;
+        padding-right: 0;
+        padding-bottom: 12px;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        width: 100%;
+    }
+}
