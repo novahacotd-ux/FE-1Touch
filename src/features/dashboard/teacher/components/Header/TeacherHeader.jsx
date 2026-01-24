@@ -93,7 +93,7 @@ const TeacherHeader = ({ onMenuToggle, pageTitle = 'Dashboard' }) => {
                                     <div className="acc-name">User</div>
                                     <div className="acc-mail">user@example.com</div>
                                 </div>
-                                <a className="btn btn-primary" href="/account">
+                                <a className="btn btn-primary" href="/teacher/account">
                                     Account
                                 </a>
                             </div>
