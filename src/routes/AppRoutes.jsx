@@ -3,6 +3,11 @@ import AdminLayout from "../features/dashboard/admin/layouts/AdminLayout.jsx";
 import SignIn from "../features/auth/pages/SignIn";
 import TeacherLayout from "../features/dashboard/teacher/layouts/TeacherLayout.jsx";
 import AdminDashboard from "../features/dashboard/admin/pages/AdminDashboard";
+import Account from "../features/dashboard/teacher/pages/Account.jsx";
+import TeacherDashboard from "../features/dashboard/teacher/pages/TeacherDashboard.jsx";
+import Schedule from "../features/dashboard/teacher/pages/Schedule.jsx";
+import TeachingClasses from "../features/dashboard/teacher/pages/TeachingClasses.jsx";
+import ClassDetail from "../features/dashboard/teacher/pages/ClassDetail.jsx";
 import AdminTeacherTab from "../features/teachers/pages/AdminTeacherTab";
 import AdminClasses from "../features/classes/pages/AdminClasses";
 import AdminStudents from "../features/students/pages/AdminStudents";
@@ -23,7 +28,7 @@ const AppRoutes = () => {
                 <Route path="systemConfig" element={<AdminSystemStructure />} />
             </Route>
             <Route path="/teacher" element={<TeacherLayout pageTitle="Dashboard" />}>
-                <Route index element={<div className="p-4"><h2>Dashboard</h2><p>Coming soon...</p></div>} />
+                <Route index element={<TeacherDashboard />} />
             </Route>
 
             <Route
@@ -32,7 +37,7 @@ const AppRoutes = () => {
                     <TeacherLayout pageTitle="Schedule" />
                 }
             >
-                <Route index element={<div className="p-4"><h2>Schedule</h2><p>Coming soon...</p></div>} />
+                <Route index element={<Schedule />} />
             </Route>
 
             <Route
@@ -41,7 +46,16 @@ const AppRoutes = () => {
                     <TeacherLayout pageTitle="Teaching Classes" />
                 }
             >
-                <Route index element={<div className="p-4"><h2>Teaching Classes</h2><p>Coming soon...</p></div>} />
+                <Route index element={<TeachingClasses />} />
+            </Route>
+
+            <Route
+                path="/teacher/teaching-classes/:classId"
+                element={
+                    <TeacherLayout pageTitle="Class Detail" />
+                }
+            >
+                <Route index element={<ClassDetail />} />
             </Route>
 
             <Route
@@ -88,7 +102,16 @@ const AppRoutes = () => {
             >
                 <Route index element={<div className="p-4"><h2>Reports</h2><p>Coming soon...</p></div>} />
                 <Route index element={<AdminDashboard />} />
-                
+
+            </Route>
+            <Route
+                path="/teacher/account"
+                element={
+                    <TeacherLayout pageTitle="Account" />
+                }
+            >
+                <Route index element={<Account />} />
+
             </Route>
         </Routes>
     );
