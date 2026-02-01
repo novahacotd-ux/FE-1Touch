@@ -1,10 +1,16 @@
 export const vi = {
     // Sidebar menu
     dashboard: 'Bảng điều khiển',
+    'Schedule': 'Lịch dạy',
+    'Teaching Classes': 'Lớp giảng dạy',
+    attendance: 'Điểm danh',
+    'Seating Chart': 'Sơ đồ chỗ ngồi',
+    students: 'Học sinh',
+    'Announcements': 'Thông báo',
+    'Reports': 'Báo cáo',
     teacher: 'Giáo viên',
     classes: 'Lớp học',
     subject: 'Môn học',
-    students: 'Học sinh',
     assignments: 'Phân công giảng dạy',
     timetable: 'Thời khóa biểu',
     attendance: 'Điểm danh',

@@ -122,9 +122,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .select:hover {
   border-color: var(--ts);
 }
+
 .select.is-open {
   border-color: var(--mc);
   box-shadow: 0 0 0 4px var(--mc-trans);
@@ -138,7 +140,8 @@
   pointer-events: none;
   transition: transform 0.2s;
 }
-.select.is-open + .selectIcon {
+
+.select.is-open+.selectIcon {
   transform: rotate(180deg);
   color: var(--mc);
 }
@@ -152,9 +155,10 @@
   max-width: 300px;
   min-width: 100%;
   border-radius: 12px;
-  background: var(--card-bg); /* Use card-bg which adapts to dark/light */
+  background: var(--card-bg);
+  /* Use card-bg which adapts to dark/light */
   border: 1px solid var(--border);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   padding: 6px;
   display: flex;
@@ -162,7 +166,7 @@
   gap: 2px;
   max-height: 260px;
   overflow-y: auto;
-  
+
   /* Animation */
   opacity: 0;
   transform: translateY(-8px) scale(0.98);
@@ -171,7 +175,7 @@
 }
 
 html.dark .select-menu {
-  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 
 .select-menu.is-open {
@@ -184,7 +188,7 @@ html.dark .select-menu {
 .select-opt {
   padding: 8px 12px;
   border-radius: 8px;
-  color: var(--tc); 
+  color: var(--tc);
   font-weight: 600;
   font-size: 13px;
   cursor: pointer;
@@ -196,21 +200,32 @@ html.dark .select-menu {
 
 /* Hover & Selected states */
 .select-opt:hover {
-  background: rgba(0,0,0,0.04);
+  background: rgba(0, 0, 0, 0.04);
 }
+
 .select-opt.selected {
   background: var(--mc-trans);
   color: var(--mc);
 }
 
 html.dark .select-opt:hover {
-  background: rgba(255,255,255,0.08); /* Better hover for dark mode */
+  background: rgba(255, 255, 255, 0.08);
+  /* Better hover for dark mode */
 }
 
 /* Scrollbar styling for the menu */
-.select-menu::-webkit-scrollbar { width: 6px; }
-.select-menu::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
-html.dark .select-menu::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+.select-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.select-menu::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+html.dark .select-menu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
 
 
 /* Filter Bar Styles */
@@ -262,31 +277,39 @@ html.dark .select-menu::-webkit-scrollbar-thumb { background: rgba(255,255,255,0
   gap: 8px;
   justify-content: center;
 }
+
 .btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 10px 18px rgba(0, 0, 0, 0.08);
 }
+
 .btn--primary {
   background: var(--mc);
   color: var(--tw);
   border-color: var(--mc);
 }
+
 .btn--ghost {
   background: transparent;
   border-color: transparent;
   color: var(--tc);
 }
+
 .btn--ghost:hover {
-  background: rgba(40, 203, 105, 0.12); /* Green tint */
-  color: var(--mc); /* Green text */
+  background: rgba(40, 203, 105, 0.12);
+  /* Green tint */
+  color: var(--mc);
+  /* Green text */
   border-color: transparent;
 }
+
 /* Alias for single-dash usage found in some files */
 .btn-ghost {
   background: transparent;
   border-color: transparent;
   color: var(--tc);
 }
+
 .btn-ghost:hover {
   background: rgba(40, 203, 105, 0.12);
   color: var(--mc);
@@ -298,6 +321,7 @@ html.dark .btn-ghost:hover {
   background: rgba(40, 203, 105, 0.15);
   color: var(--mc);
 }
+
 /* Checkbox Styles */
 .checkbox-wrap {
   display: inline-flex;
@@ -312,20 +336,25 @@ html.dark .btn-ghost:hover {
 }
 
 .checkbox-box {
-  width: 16px; /* Smaller size */
+  width: 16px;
+  /* Smaller size */
   height: 16px;
-  border-radius: 4px; /* Adjusted radius */
-  border: 1px solid var(--border); /* Thinner border for cleaner look at small size */
+  border-radius: 4px;
+  /* Adjusted radius */
+  border: 1px solid var(--border);
+  /* Thinner border for cleaner look at small size */
   background: var(--card-bg);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 12px; /* Smaller icon */
+  font-size: 12px;
+  /* Smaller icon */
 }
 
 .checkbox-wrap:hover .checkbox-box {
-  border-color: var(--mc); /* Only border highlight on hover */
+  border-color: var(--mc);
+  /* Only border highlight on hover */
 }
 
 .checkbox-box.checked {
@@ -334,7 +363,8 @@ html.dark .btn-ghost:hover {
 }
 
 .checkbox-box svg {
-  display: block; /* Ensure no extra space */
+  display: block;
+  /* Ensure no extra space */
 }
 
 .checkbox-label {
@@ -344,57 +374,69 @@ html.dark .btn-ghost:hover {
 }
 
 /* Modal System */
-.modalBackdrop{
-  position:fixed;
-  inset:0;
-  background: rgba(0,0,0,.35);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 18px;
   z-index: 999;
 }
-.modal{
+
+.modal {
   width: min(840px, 100%);
   background: var(--card-bg);
-  border:1px solid var(--border);
+  border: 1px solid var(--border);
   border-radius: 18px;
-  box-shadow: 0 18px 40px rgba(0,0,0,.25);
-  overflow:hidden;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, .25);
+  overflow: hidden;
   animation: modalIn .2s ease;
   display: flex;
   flex-direction: column;
 }
-@keyframes modalIn{
-  from{ transform: scale(.95); opacity:0; }
-  to{ transform: scale(1); opacity:1; }
+
+@keyframes modalIn {
+  from {
+    transform: scale(.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
-.modalHead{
+.modalHead {
   padding: 14px;
   border-bottom: 1px solid var(--border);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.modalTitle{
-  font-weight:800;
-  font-size:14px;
+
+.modalTitle {
+  font-weight: 800;
+  font-size: 14px;
   color: var(--tc);
   text-align: left !important;
   flex: 1 !important;
   width: 100%;
 }
-.modalBody{
+
+.modalBody {
   padding: 12px;
   color: var(--tc);
   flex: 1;
   overflow-y: auto;
 }
-.modalActions{
-  display:flex;
-  justify-content:flex-end;
-  gap:10px;
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
   margin-top: 14px;
 }
 
@@ -402,23 +444,31 @@ html.dark .btn-ghost:hover {
 .modal--confirm {
   width: min(380px, 90%) !important;
 }
-.confirmDesc{
-  line-height:1.5;
+
+.confirmDesc {
+  line-height: 1.5;
   color: var(--ts);
   white-space: pre-wrap;
 }
 
 /* Close Button */
-.modalClose{
-  width: 28px; height: 28px;
-  display:flex; align-items:center; justify-content:center;
-  border-radius:8px;
-  border:none;
-  background:transparent;
+.modalClose {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
   color: var(--ts);
-  cursor:pointer;
+  cursor: pointer;
 }
-.modalClose:hover{ background: rgba(0,0,0,.05); color: var(--tc); }
+
+.modalClose:hover {
+  background: rgba(0, 0, 0, .05);
+  color: var(--tc);
+}
 
 /* Pagination Shared */
 .pagi-btn {
@@ -434,19 +484,21 @@ html.dark .btn-ghost:hover {
   cursor: pointer;
   transition: all .15s ease;
 }
+
 .pagi-btn:hover:not(:disabled) {
   background: rgba(40, 203, 105, .10);
   border-color: rgba(40, 203, 105, .35);
   color: var(--mc);
   transform: translateY(-1px);
 }
+
 .pagi-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
+
 .pagi-text {
   font-size: 13px;
   color: var(--ts);
   font-weight: 500;
 }
-
