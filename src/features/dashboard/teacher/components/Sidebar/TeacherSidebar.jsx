@@ -1,101 +1,67 @@
-import { NavLink, useLocation } from 'react-router-dom';
-import "./TeacherSidebar.css"
+import { NavLink } from "react-router-dom";
+import './TeacherSidebar.css';
+import { useState } from "react";
+import { useLanguage } from '../../../../../context/useLanguage';
+import {
+    FiHome,
+    FiCalendar,
+    FiUsers,
+    FiClipboard,
+    FiGrid,
+    FiUser,
+    FiBell,
+    FiBarChart2,
+    FiMenu,
+} from 'react-icons/fi';
 
-const TeacherSidebar = ({ isOpen, onClose, isCollapsed, onToggleCollapse }) => {
-    const location = useLocation();
+const TeacherSidebar = () => {
+    const [collapsed, setCollapsed] = useState(false);
+    const { t } = useLanguage();
 
-    const menuItems = [
-        { path: '/teacher', icon: 'fa-gauge', label: 'Dashboard' },
-
-        { path: '/teacher/schedule', icon: 'fa-calendar-days', label: 'Schedule' },
-
-        { path: '/teacher/teaching-classes', icon: 'fa-chalkboard-user', label: 'Teaching Classes' },
-
-        { path: '/teacher/attendance', icon: 'fa-clipboard-check', label: 'Attendance' },
-
-        { path: '/teacher/seating-chart', icon: 'fa-table-cells', label: 'Seating Chart' },
-
-        { path: '/teacher/students', icon: 'fa-user-graduate', label: 'Students' },
-
-        { path: '/teacher/announcements', icon: 'fa-bullhorn', label: 'Announcements' },
-
-        { path: '/teacher/reports', icon: 'fa-chart-line', label: 'Reports' },
-    ]
-
-
-    const isActive = (path) => location.pathname === path;
+    const menu = [
+        { key: 'dashboard', path: '/teacher', label: t('dashboard') || 'Dashboard', icon: <FiHome />, end: true },
+        { key: 'schedule', path: '/teacher/schedule', label: t('Schedule') || 'Lịch dạy', icon: <FiCalendar /> },
+        { key: 'teachingClasses', path: '/teacher/teaching-classes', label: t('Teaching Classes') || 'Lớp giảng dạy', icon: <FiUsers /> },
+        { key: 'attendance', path: '/teacher/attendance', label: t('attendance') || 'Điểm danh', icon: <FiClipboard /> },
+        { key: 'seatingChart', path: '/teacher/seating-chart', label: t('Seating Chart') || 'Sơ đồ chỗ ngồi', icon: <FiGrid /> },
+        { key: 'students', path: '/teacher/students', label: t('students') || 'Học sinh', icon: <FiUser /> },
+        { key: 'announcements', path: '/teacher/announcements', label: t('Announcements') || 'Thông báo', icon: <FiBell /> },
+        { key: 'reports', path: '/teacher/reports', label: t('Reports') || 'Báo cáo', icon: <FiBarChart2 /> },
+    ];
 
     return (
-        <>
-            <div
-                className={`sidebar-overlay ${isOpen ? 'show' : ''}`}
-                onClick={onClose}
-            />
-
-            {/* Sidebar */}
-            <aside className="sidebar">
+        <aside className={`admin-sidebar ${collapsed ? 'collapsed' : ''}`}>
+            <div className="admin-sidebar-logo">
                 <button
-                    className="menu-toggle"
-                    onClick={onToggleCollapse}
-                    title="Collapse Sidebar"
+                    className="admin-sidebar-toggle"
+                    onClick={() => setCollapsed(prev => !prev)}
+                    aria-label="Toggle sidebar"
                 >
-                    <i className="fas fa-chevron-left"></i>
+                    <FiMenu />
                 </button>
+                {!collapsed && <span>{t('teacherPortal') || 'Teacher Portal'}</span>}
+            </div>
 
-                <div className="sidebar-head">
-                    <NavLink to="/dashboard">
-                        <div className="app-logo">
-                            <img
-                                src=""
-                                alt="image"
-                                className="big-logo"
-                            />
-                        </div>
-                        <img
-                            src=""
-                            alt="image"
-                            className="small-logo"
-                        />
-                    </NavLink>
-
-                    <button
-                        className="sidebar-toggle"
-                        onClick={onClose}
-                        title="Toggle Sidebar"
+            <nav className="admin-sidebar-menu">
+                {menu.map(item => (
+                    <NavLink
+                        key={item.key}
+                        to={item.path}
+                        end={item.end}
+                        className={({ isActive }) =>
+                            `admin-sidebar-menu-item ${isActive ? 'active' : ''}`
+                        }
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12h18M3 6h18M3 18h18"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <div className="sidebar-body">
-                    <ul className="sidebar-menu-list">
-                        {menuItems.map((item) => (
-                            <li
-                                key={item.path}
-                                className={`sidebar-menu-item ${isActive(item.path) ? 'active' : ''}`}
-                            >
-                                <NavLink to={item.path} onClick={onClose}>
-                                    <div className="sidebar-menu-icon">
-                                        <i className={`fa ${item.icon}`}></i>
-                                    </div>
-                                    <div className="sidebar-menu-text">
-                                        {item.label}
-                                        {item.badge && (
-                                            <span className="badge">{item.badge}</span>
-                                        )}
-                                    </div>
-                                    <div className="sidebar-menu-arrow">
-                                        <i className="fa-solid fa-angle-right"></i>
-                                    </div>
-                                </NavLink>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </aside>
-        </>
+                        <span className="admin-sidebar-item-icon">
+                            {item.icon}
+                        </span>
+                        <span className="admin-sidebar-item-text">
+                            {item.label}
+                        </span>
+                    </NavLink>
+                ))}
+            </nav>
+        </aside>
     );
 };
 
