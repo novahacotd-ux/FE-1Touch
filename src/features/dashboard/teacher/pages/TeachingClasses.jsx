@@ -1,8 +1,23 @@
+// TeachingClasses.jsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+    FiBook,
+    FiUsers,
+    FiStar,
+    FiSearch,
+    FiHome,
+    FiArrowRight,
+    FiUser,
+} from 'react-icons/fi';
 import './TeachingClasses.css';
 
-// Mock data - Danh sách lớp giảng dạy (based on ERD: classes + teacher_assignments)
+// Import admin components
+import Card from '../../admin/components/ui/Card';
+import { Pill } from '../../admin/components/ui/Pills';
+import Select from '../../admin/components/ui/Select';
+
+// Mock data - Danh sách lớp giảng dạy
 const teachingClassesData = [
     {
         id: 1,
@@ -30,7 +45,7 @@ const teachingClassesData = [
         role: 'HOMEROOM',
         subject: 'Chủ nhiệm',
         room: 'P.202',
-        homeroomTeacher: null, // Bạn là chủ nhiệm
+        homeroomTeacher: null,
         academicYear: '2025-2026',
         semester: 'Học kỳ 2',
     },
@@ -96,16 +111,14 @@ const teachingClassesData = [
     },
 ];
 
-// Danh sách khối để filter
 const gradeOptions = [
     { value: 'all', label: 'Tất cả khối' },
-    { value: 6, label: 'Khối 6' },
-    { value: 7, label: 'Khối 7' },
-    { value: 8, label: 'Khối 8' },
-    { value: 9, label: 'Khối 9' },
+    { value: '6', label: 'Khối 6' },
+    { value: '7', label: 'Khối 7' },
+    { value: '8', label: 'Khối 8' },
+    { value: '9', label: 'Khối 9' },
 ];
 
-// Danh sách vai trò để filter
 const roleOptions = [
     { value: 'all', label: 'Tất cả vai trò' },
     { value: 'HOMEROOM', label: 'Chủ nhiệm' },
@@ -118,7 +131,6 @@ function TeachingClasses() {
     const [selectedRole, setSelectedRole] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
 
-    // Filter classes based on selected filters
     const filteredClasses = teachingClassesData.filter(cls => {
         const gradeMatch = selectedGrade === 'all' || cls.gradeLevel === Number(selectedGrade);
         const roleMatch = selectedRole === 'all' || cls.role === selectedRole;
@@ -128,196 +140,169 @@ function TeachingClasses() {
         return gradeMatch && roleMatch && searchMatch;
     });
 
-    // Statistics
     const totalClasses = teachingClassesData.length;
     const homeroomCount = teachingClassesData.filter(c => c.role === 'HOMEROOM').length;
     const subjectCount = teachingClassesData.filter(c => c.role === 'SUBJECT').length;
     const totalStudents = teachingClassesData.reduce((sum, c) => sum + c.totalStudents, 0);
 
-    // Handle class click
     const handleClassClick = (classId) => {
         navigate(`/teacher/teaching-classes/${classId}`);
     };
 
     return (
-        <div className="container-fluid container-dashboard-db" style={{ padding: '10px 20px' }}>
+        <div className="admin-dash">
             {/* Header */}
-            <div className="teaching-classes-header card-db">
-                <div className="header-left">
-                    <h2 className="page-title">
-                        <i className="fas fa-chalkboard-teacher"></i>
-                        Lớp giảng dạy
-                    </h2>
-                    <span className="page-subtitle">
-                        Năm học 2025-2026 • Học kỳ 2
-                    </span>
+            <div className="admin-dash__top">
+                <div className="admin-dash__title">
+                    <div className="admin-dash__titleBadge">
+                        <FiBook />
+                    </div>
+                    <div className="admin-dash__titleText">
+                        <div className="h1">Lớp giảng dạy</div>
+                        <div className="sub">Năm học 2025-2026 • Học kỳ 2</div>
+                    </div>
                 </div>
 
-                <div className="header-controls">
-                    {/* Search */}
-                    <div className="search-box">
-                        <i className="fas fa-search"></i>
-                        <input
-                            type="text"
-                            placeholder="Tìm kiếm lớp..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                    </div>
+                <div className="admin-dash__filters">
+                    <div className="filterRow" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: '16px', alignItems: 'flex-end' }}>
+                        <div className="filter">
+                            <div className="filterLabel">
+                                <FiSearch />
+                            </div>
+                            <input
+                                className="textInput"
+                                type="text"
+                                placeholder="Tìm kiếm lớp..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                style={{ width: '100%' }}
+                            />
+                        </div>
 
-                    {/* Grade Filter */}
-                    <div className="filter-group">
-                        <select
-                            className="form-select"
-                            value={selectedGrade}
-                            onChange={(e) => setSelectedGrade(e.target.value)}
-                        >
-                            {gradeOptions.map(option => (
-                                <option key={option.value} value={option.value}>
-                                    {option.label}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                        <div className="filter">
+                            <div className="filterLabel">
+                                <FiHome />
+                            </div>
+                            <Select
+                                value={selectedGrade}
+                                onChange={setSelectedGrade}
+                                options={gradeOptions}
+                            />
+                        </div>
 
-                    {/* Role Filter */}
-                    <div className="filter-group">
-                        <select
-                            className="form-select"
-                            value={selectedRole}
-                            onChange={(e) => setSelectedRole(e.target.value)}
-                        >
-                            {roleOptions.map(option => (
-                                <option key={option.value} value={option.value}>
-                                    {option.label}
-                                </option>
-                            ))}
-                        </select>
+                        <div className="filter">
+                            <div className="filterLabel">
+                                <FiStar />
+                            </div>
+                            <Select
+                                value={selectedRole}
+                                onChange={setSelectedRole}
+                                options={roleOptions}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Statistics Cards */}
-            <div className="stats-row">
-                <div className="stat-card">
-                    <div className="stat-icon total">
-                        <i className="fas fa-school"></i>
-                    </div>
-                    <div className="stat-info">
-                        <span className="stat-value">{totalClasses}</span>
-                        <span className="stat-label">Tổng số lớp</span>
+            {/* Statistics */}
+            <div className="grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+                <div className="fact">
+                    <div className="factIcon" style={{ color: 'var(--mc)' }}><FiHome /></div>
+                    <div>
+                        <div className="factValue">{totalClasses}</div>
+                        <div className="factLabel">Tổng số lớp</div>
                     </div>
                 </div>
-                <div className="stat-card">
-                    <div className="stat-icon homeroom">
-                        <i className="fas fa-star"></i>
-                    </div>
-                    <div className="stat-info">
-                        <span className="stat-value">{homeroomCount}</span>
-                        <span className="stat-label">Lớp chủ nhiệm</span>
+                <div className="fact">
+                    <div className="factIcon" style={{ color: 'var(--warn)' }}><FiStar /></div>
+                    <div>
+                        <div className="factValue">{homeroomCount}</div>
+                        <div className="factLabel">Lớp chủ nhiệm</div>
                     </div>
                 </div>
-                <div className="stat-card">
-                    <div className="stat-icon subject">
-                        <i className="fas fa-book"></i>
-                    </div>
-                    <div className="stat-info">
-                        <span className="stat-value">{subjectCount}</span>
-                        <span className="stat-label">Lớp bộ môn</span>
+                <div className="fact">
+                    <div className="factIcon" style={{ color: 'var(--info)' }}><FiBook /></div>
+                    <div>
+                        <div className="factValue">{subjectCount}</div>
+                        <div className="factLabel">Lớp bộ môn</div>
                     </div>
                 </div>
-                <div className="stat-card">
-                    <div className="stat-icon students">
-                        <i className="fas fa-user-graduate"></i>
-                    </div>
-                    <div className="stat-info">
-                        <span className="stat-value">{totalStudents}</span>
-                        <span className="stat-label">Tổng học sinh</span>
+                <div className="fact">
+                    <div className="factIcon" style={{ color: 'var(--good)' }}><FiUsers /></div>
+                    <div>
+                        <div className="factValue">{totalStudents}</div>
+                        <div className="factLabel">Tổng học sinh</div>
                     </div>
                 </div>
             </div>
 
             {/* Classes Grid */}
-            <div className="classes-section card-db">
-                <div className="card-db-header">
-                    <i className="fas fa-list"></i>
-                    <span>Danh sách lớp ({filteredClasses.length})</span>
-                </div>
-                <div className="card-db-body">
-                    {filteredClasses.length > 0 ? (
-                        <div className="classes-grid">
-                            {filteredClasses.map(cls => (
-                                <div
-                                    key={cls.id}
-                                    className={`class-card ${cls.role.toLowerCase()}`}
-                                    onClick={() => handleClassClick(cls.id)}
-                                >
-                                    <div className="class-card-header">
-                                        <div className="class-name-wrap">
-                                            <span className="class-name">{cls.className}</span>
-                                            <span className="class-grade">{cls.grade}</span>
+            <Card
+                title={`Danh sách lớp (${filteredClasses.length})`}
+                icon={<FiUsers />}
+                subtitle="Nhấn vào lớp để xem chi tiết"
+                right={<Pill tone="info">{filteredClasses.length} lớp</Pill>}
+            >
+                {filteredClasses.length > 0 ? (
+                    <div className="classes-grid">
+                        {filteredClasses.map(cls => (
+                            <div
+                                key={cls.id}
+                                className={`class-card ${cls.role.toLowerCase()}`}
+                                onClick={() => handleClassClick(cls.id)}
+                            >
+                                <div className="class-card-header">
+                                    <div className="class-name-wrap">
+                                        <span className="class-name">{cls.className}</span>
+                                        <span className="class-grade">{cls.grade}</span>
+                                    </div>
+                                    <span className={`pill pill--${cls.role === 'HOMEROOM' ? 'warn' : 'info'}`}>
+                                        {cls.role === 'HOMEROOM' ? (
+                                            <><FiStar size={12} /> CN</>
+                                        ) : (
+                                            <><FiBook size={12} /> BM</>
+                                        )}
+                                    </span>
+                                </div>
+
+                                <div className="class-card-body">
+                                    <div className="class-info-row">
+                                        <FiBook size={14} />
+                                        <span>{cls.subject}</span>
+                                    </div>
+                                    <div className="class-info-row">
+                                        <FiHome size={14} />
+                                        <span>{cls.room}</span>
+                                    </div>
+                                    {cls.role === 'SUBJECT' && cls.homeroomTeacher && (
+                                        <div className="class-info-row muted">
+                                            <FiUser size={14} />
+                                            <span>CN: {cls.homeroomTeacher}</span>
                                         </div>
-                                        <span className={`role-badge ${cls.role.toLowerCase()}`}>
-                                            {cls.role === 'HOMEROOM' ? (
-                                                <>
-                                                    <i className="fas fa-star"></i> CN
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <i className="fas fa-book"></i> BM
-                                                </>
-                                            )}
+                                    )}
+                                </div>
+
+                                <div className="class-card-footer">
+                                    <div className="student-stats">
+                                        <span className="tag tag--muted">
+                                            <FiUsers size={12} /> {cls.totalStudents} học sinh
                                         </span>
                                     </div>
-
-                                    <div className="class-card-body">
-                                        <div className="class-subject">
-                                            <i className="fas fa-graduation-cap"></i>
-                                            <span>{cls.subject}</span>
-                                        </div>
-                                        <div className="class-room">
-                                            <i className="fas fa-door-open"></i>
-                                            <span>{cls.room}</span>
-                                        </div>
-                                        {cls.role === 'SUBJECT' && cls.homeroomTeacher && (
-                                            <div className="class-homeroom">
-                                                <i className="fas fa-user-tie"></i>
-                                                <span>CN: {cls.homeroomTeacher}</span>
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    <div className="class-card-footer">
-                                        <div className="student-stats">
-                                            <div className="student-total">
-                                                <i className="fas fa-users"></i>
-                                                <span>{cls.totalStudents} học sinh</span>
-                                            </div>
-                                            <div className="student-gender">
-                                                <span className="male">
-                                                    <i className="fas fa-male"></i> {cls.maleStudents}
-                                                </span>
-                                                <span className="female">
-                                                    <i className="fas fa-female"></i> {cls.femaleStudents}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="view-detail">
-                                            <span>Xem chi tiết</span>
-                                            <i className="fas fa-arrow-right"></i>
-                                        </div>
+                                    <div className="view-detail">
+                                        <span>Chi tiết</span>
+                                        <FiArrowRight size={14} />
                                     </div>
                                 </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="no-results">
-                            <i className="fas fa-search"></i>
-                            <p>Không tìm thấy lớp phù hợp với bộ lọc</p>
-                        </div>
-                    )}
-                </div>
-            </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="emptyBox">
+                        <FiSearch size={24} />
+                        <p>Không tìm thấy lớp phù hợp với bộ lọc</p>
+                    </div>
+                )}
+            </Card>
         </div>
     );
 }
