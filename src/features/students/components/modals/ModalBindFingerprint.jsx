@@ -21,52 +21,54 @@ export default function ModalBindFingerprint({ modal, onClose, onAudit, onMutate
   const canSave = fp.trim() && (!isDup || forceDup);
 
   return (
-    <div className="modalOverlay" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <div className="modalHead">
+    <div className="stu-modalOverlay" onClick={onClose} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div className="stu-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="stu-modalHead">
           <div className="strong">Gán vân tay</div>
           <button className="iconBtn" onClick={onClose}><FiX /></button>
         </div>
 
-        <div className="muted">
-          Nhập <span className="mono">fingerprint_id</span>. Có kiểm tra trùng. Nếu trùng, bạn phải xác nhận “Force”.
-        </div>
+        <div className="stu-modalBody">
+          <div className="muted">
+            Nhập <span className="mono">fingerprint_id</span>. Có kiểm tra trùng. Nếu trùng, bạn phải xác nhận “Force”.
+          </div>
 
-        <div className="formRow">
-          <label>fingerprint_id</label>
-          <input
-            className="input"
-            value={fp}
-            onChange={(e) => {
-              setFp(e.target.value);
-              setForceDup(false);
-            }}
-            placeholder="VD: FP_10444"
-          />
-        </div>
+          <div className="formRow">
+            <label>fingerprint_id</label>
+            <input
+              className="input"
+              value={fp}
+              onChange={(e) => {
+                setFp(e.target.value);
+                setForceDup(false);
+              }}
+              placeholder="VD: FP_10444"
+            />
+          </div>
 
-        {isDup ? (
-          <div className="warnBox" style={{ marginTop: 12 }}>
-            <FiAlertTriangle />
-            <div>
-              <div className="strong">Fingerprint đang bị trùng</div>
-              <div className="muted">
-                Mã <span className="mono">{fp.trim()}</span> đã gán cho:{" "}
-                {owners.map((o) => `${o.full_name} (${o.student_code})`).join(", ")}.
-              </div>
+          {isDup ? (
+            <div className="warnBox" style={{ marginTop: 12 }}>
+              <FiAlertTriangle />
+              <div>
+                <div className="strong">Fingerprint đang bị trùng</div>
+                <div className="muted">
+                  Mã <span className="mono">{fp.trim()}</span> đã gán cho:{" "}
+                  {owners.map((o) => `${o.full_name} (${o.student_code})`).join(", ")}.
+                </div>
 
-              <div style={{ marginTop: 10 }}>
-                <Checkbox
-                  checked={forceDup}
-                  onChange={(e) => setForceDup(e.target.checked)}
-                  label="Tôi hiểu rủi ro và vẫn muốn gán (tạo issue DUPLICATE)"
-                />
+                <div style={{ marginTop: 10 }}>
+                  <Checkbox
+                    checked={forceDup}
+                    onChange={(e) => setForceDup(e.target.checked)}
+                    label="Tôi hiểu rủi ro và vẫn muốn gán (tạo issue DUPLICATE)"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        ) : null}
+          ) : null}
+        </div>
 
-        <div className="modalActions">
+        <div className="stu-modalActions">
           <button className="btn btn-ghost" onClick={onClose}>Huỷ</button>
           <button
             className="btn"

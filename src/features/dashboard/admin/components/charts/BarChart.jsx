@@ -2,9 +2,9 @@
 import React from 'react';
 import { formatInt } from '../../utils/dashboardHelpers';
 
-function LegendDot({ color, label }) {
+function LegendDot({ color, label, x = 0, y = 0 }) {
   return (
-    <g transform="translate(0,0)">
+    <g transform={`translate(${x},${y})`}>
       <circle cx="0" cy="0" r="5" fill={color} />
       <text x="10" y="4" className="chartLegend">
         {label}
@@ -58,7 +58,7 @@ export default function BarChart({ height = 220, data, labelA, labelB }) {
       })}
       <g transform={`translate(${padding.l}, ${8})`}>
         <LegendDot color="var(--warn)" label={labelA} />
-        <LegendDot color="var(--bad)" label={labelB} />
+        <LegendDot color="var(--bad)" label={labelB} x={70} />
       </g>
     </svg>
   );

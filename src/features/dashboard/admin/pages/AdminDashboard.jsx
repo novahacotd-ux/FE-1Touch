@@ -184,8 +184,8 @@ export default function AdminDashboard() {
         <div className="admin-dash__filters">
           <div className="filterRow">
             <div className="filter">
-              <div className="filterLabel">
-                <FiCalendar /> Thời gian
+              <div className="filterLabel" title="Thời gian">
+                <FiCalendar />
               </div>
               <Select
                 value={datePreset}
@@ -199,8 +199,8 @@ export default function AdminDashboard() {
             </div>
 
             <div className="filter">
-              <div className="filterLabel">
-                <FiUsers /> Lớp
+              <div className="filterLabel" title="Lớp">
+                <FiUsers />
               </div>
               <Select
                 value={selectedClassId}
@@ -213,22 +213,22 @@ export default function AdminDashboard() {
             </div>
 
             <div className="filter">
-              <div className="filterLabel">
-                <FiUsers /> Giáo viên
+              <div className="filterLabel" title="Giáo viên">
+                <FiUsers />
               </div>
               <Select
                 value={selectedTeacherId}
                 onChange={setSelectedTeacherId}
                 options={[
-                  { value: "all", label: "Tất cả" },
+                  { value: "all", label: "Tất cả giáo viên" },
                   ...teachers.map((t) => ({ value: t.id, label: `${t.full_name} (${t.teacher_code})` })),
                 ]}
               />
             </div>
 
             <div className="filter search">
-              <div className="filterLabel">
-                <FiSearch /> Tìm nhanh
+              <div className="filterLabel" title="Tìm nhanh">
+                <FiSearch />
               </div>
               <input
                 className="textInput"
@@ -285,7 +285,7 @@ export default function AdminDashboard() {
               <div className="miniTitle">Theo từng tiết (P/L/A)</div>
               <MiniStackedBars
                 data={dataset.sessionsToday.map((s) => ({
-                  label: s.period,
+                  label: s.period.replace('Tiết ', 'T'),
                   a: s.present,
                   b: s.late,
                   c: s.absent,

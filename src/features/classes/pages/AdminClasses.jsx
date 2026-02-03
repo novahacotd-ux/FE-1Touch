@@ -23,7 +23,9 @@ import {
   FiUserCheck,
   FiTrendingUp,
   FiAlertTriangle,
-  FiBook
+  FiBook,
+  FiLayers,
+  FiSliders
 } from "react-icons/fi";
 
 // Global Admin UI
@@ -173,19 +175,20 @@ export default function AdminClasses() {
         <div className="cardBody">
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'flex-end' }}>
             {/* Search */}
-            <div style={{ flex: '1 1 250px' }}>
-                <div className="filterLabel" style={{ marginBottom: 4, fontWeight: 600, fontSize: 12, color: 'var(--ts)' }}>Tìm kiếm</div>
+            <div style={{ flex: '1 1 250px', display: 'flex', alignItems: 'center', gap: 10 }}>
+                <FiSearch style={{ color: 'var(--ts)', fontSize: 18 }} />
                 <SearchInput 
                   value={q} 
                   onChange={setQ} 
                   placeholder="VD: 10A1, 11B2..." 
                   className="clm-search" 
                   label={null}
+                  style={{ flex: 1 }}
                 />
             </div>
 
             <div className="filter">
-               <div className="filterLabel" style={{ marginBottom: 4, fontWeight: 600, fontSize: 12, color: 'var(--ts)' }}>Năm học</div>
+               <div className="filterLabel" style={{ marginBottom: 4, fontWeight: 600, fontSize: 14, color: 'var(--ts)' }}><FiCalendar /></div>
                <Select
                   value={yearId}
                   onChange={setYearId}
@@ -196,7 +199,7 @@ export default function AdminClasses() {
             </div>
 
             <div className="filter">
-               <div className="filterLabel" style={{ marginBottom: 4, fontWeight: 600, fontSize: 12, color: 'var(--ts)' }}>Khối</div>
+               <div className="filterLabel" style={{ marginBottom: 4, fontWeight: 600, fontSize: 14, color: 'var(--ts)' }}><FiLayers /></div>
                <Select
                   value={gradeId}
                   onChange={setGradeId}
@@ -210,7 +213,7 @@ export default function AdminClasses() {
             </div>
 
             <div className="filter">
-               <div className="filterLabel" style={{ marginBottom: 4, fontWeight: 600, fontSize: 12, color: 'var(--ts)' }}>Trạng thái</div>
+               <div className="filterLabel" style={{ marginBottom: 4, fontWeight: 600, fontSize: 14, color: 'var(--ts)' }}><FiActivity /></div>
                <Select
                   value={status}
                   onChange={setStatus}
@@ -225,7 +228,7 @@ export default function AdminClasses() {
             </div>
 
             <div className="filter">
-               <div className="filterLabel" style={{ marginBottom: 4, fontWeight: 600, fontSize: 12, color: 'var(--ts)' }}>Tùy chọn</div>
+               <div className="filterLabel" style={{ marginBottom: 4, fontWeight: 600, fontSize: 14, color: 'var(--ts)' }}><FiSliders /></div>
                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', height: 40 }}>
                   <Checkbox
                     label="Thiếu GVCN"
