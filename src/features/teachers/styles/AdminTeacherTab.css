@@ -767,7 +767,7 @@
   align-items:center;
   justify-content:center;
   padding: 18px;
-  z-index: 50;
+  z-index: 100; /* Sidebar is 70, this must be higher */
 }
 .at-modal{
   width: min(840px, 100%);

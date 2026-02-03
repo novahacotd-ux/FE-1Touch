@@ -98,7 +98,7 @@
     .admin-sidebar {
         /* When expanded on mobile, overlay content */
         position: absolute;
-        z-index: 100;
+        z-index: 70; /* Lower than modal overlay (80) */
         height: 100%;
         box-shadow: 4px 0 20px rgba(0,0,0,0.2);
     }
