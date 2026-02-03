@@ -423,6 +423,16 @@ export default function AdminAttendance() {
       {/* Filters */}
       <Card icon={<FiFilter />} title="Bộ lọc" subtitle="Năm học • lớp • thời gian • trạng thái session • tìm kiếm">
         <div className="att-filters">
+          <div className="att-filter att-filter--wide">
+            <label>Tìm nhanh</label>
+            <SearchInput
+              value={q}
+              onChange={setQ}
+              placeholder="Tìm theo lớp / ngày / sessionId / mã HS / tên HS..."
+              label={null}
+            />
+          </div>
+
           <div className="att-filter">
             <label>Năm học</label>
             <Select value={yearId} onChange={setYearId} options={years.map((y) => ({ value: y.id, label: y.name }))} />
@@ -456,15 +466,6 @@ export default function AdminAttendance() {
             />
           </div>
 
-          <div className="att-filter att-filter--wide">
-            <label>Tìm nhanh</label>
-            <SearchInput
-              value={q}
-              onChange={setQ}
-              placeholder="Tìm theo lớp / ngày / sessionId / mã HS / tên HS..."
-              label={null}
-            />
-          </div>
         </div>
 
         <div className="att-chipRow">
