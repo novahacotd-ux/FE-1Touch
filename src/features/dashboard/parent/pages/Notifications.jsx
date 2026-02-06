@@ -10,44 +10,60 @@ import {
   FaClock
 } from 'react-icons/fa';
 
-/* ================= MOCK DATA ================= */
-const MOCK_NOTIFICATIONS = [
+/* ================= MOCK TABLES (match ERD names) ================= */
+const notifications = [
   {
     id: 1,
-    title: 'Học sinh đi muộn',
+    student_id: 'HS001',
+    parent_id: 1,
     message: 'Học sinh Nguyễn Văn A đi muộn 15 phút vào tiết 1.',
-    category: 'ATTENDANCE',
-    sent_at: '08:10 12/05',
-    is_read: false
+    sent_at: '2024-05-12 08:10',
+    status: 'SENT'
   },
   {
     id: 2,
-    title: 'Thông báo khẩn',
+    student_id: 'HS001',
+    parent_id: 1,
     message: 'Ngày mai học sinh nghỉ học do thời tiết xấu.',
-    category: 'URGENT',
-    sent_at: '18:30 11/05',
-    is_read: false
+    sent_at: '2024-05-11 18:30',
+    status: 'SENT'
   },
   {
     id: 3,
-    title: 'Thông báo chung',
+    student_id: 'HS001',
+    parent_id: 1,
     message: 'Nhà trường tổ chức họp phụ huynh vào cuối tháng.',
-    category: 'INFO',
-    sent_at: '09:00 10/05',
-    is_read: true
+    sent_at: '2024-05-10 09:00',
+    status: 'SENT'
   }
 ];
-/* ============================================= */
+/* ================================================================= */
+
+const inferCategory = (message) => {
+  const msg = (message || '').toLowerCase();
+  if (msg.includes('khẩn') || msg.includes('nghỉ học')) return 'URGENT';
+  if (msg.includes('đi muộn') || msg.includes('điểm danh')) return 'ATTENDANCE';
+  return 'INFO';
+};
 
 const Notifications = () => {
   const [filter, setFilter] = useState('all');
   const [expandedId, setExpandedId] = useState(null);
-  const [notifications, setNotifications] = useState(MOCK_NOTIFICATIONS);
+  const [readIds, setReadIds] = useState(() => new Set());
 
-  const filtered =
-    filter === 'all'
-      ? notifications
-      : notifications.filter((n) => !n.is_read);
+  const enriched = notifications.map(n => ({
+    ...n,
+    category: inferCategory(n.message),
+    title:
+      inferCategory(n.message) === 'URGENT'
+        ? 'Thông báo khẩn'
+        : inferCategory(n.message) === 'ATTENDANCE'
+          ? 'Thông báo điểm danh'
+          : 'Thông báo chung',
+    is_read: readIds.has(n.id)
+  }));
+
+  const filtered = filter === 'all' ? enriched : enriched.filter((n) => !n.is_read);
 
   const getIcon = (category) => {
     switch (category) {
@@ -62,11 +78,11 @@ const Notifications = () => {
 
   const handleToggle = (id) => {
     setExpandedId(expandedId === id ? null : id);
-    setNotifications((prev) =>
-      prev.map((n) =>
-        n.id === id ? { ...n, is_read: true } : n
-      )
-    );
+    setReadIds(prev => {
+      const next = new Set(prev);
+      next.add(id);
+      return next;
+    });
   };
 
   return (
@@ -77,7 +93,7 @@ const Notifications = () => {
           <div className="header-left">
             <h3>Thông báo từ trường</h3>
             <span className="badge">
-              {notifications.filter((n) => !n.is_read).length} MỚI
+              {enriched.filter((n) => !n.is_read).length} MỚI
             </span>
           </div>
 

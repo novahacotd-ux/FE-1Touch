@@ -12,13 +12,18 @@
 }
 
 .attendance-today,
-.welcome-card,
 .stat-card,
 .timetable,
 .attendance-recent {
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 20px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
+  padding: 20px;
+}
+
+.welcome-card {
+  border-radius: 20px;
+  border: 1px solid var(--border);
   padding: 20px;
 }
 
@@ -37,9 +42,9 @@
 }
 
 .icon-box.emerald {
-  background: #ecfdf5;
-  color: #059669;
-  padding:8px;
+  background: var(--mc-trans);
+  color: var(--mc);
+  padding: 8px;
   width: 80px;
   height: 80px;
 }
@@ -56,10 +61,11 @@
 .info-row {
   display: flex;
   justify-content: space-between;
-  background: #f8fafc;
+  background: var(--second-bg);
   padding: 10px;
   border-radius: 12px;
   margin-bottom: 8px;
+  color: var(--tc);
 }
 
 .status-live {
@@ -74,7 +80,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #10b981;
+  background: var(--mc);
 }
 
 /* WELCOME */
@@ -83,18 +89,24 @@
   color: white;
 }
 
-.class-info{
-    display:flex;
-    gap:8px;
-    align-items: center;
+html.dark .welcome-card {
+  background: linear-gradient(135deg, #047857, #064e3b);
+  color: #f0fdf4;
 }
-.class-info div{
-    display:flex;
-    flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+
+.class-info {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.class-info div {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 /* STATS */
@@ -109,19 +121,35 @@
   gap: 12px;
   align-items: center;
   padding: 16px;
-  border: 1px solid #e5e7eb;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+html.dark .stat-card {
+  box-shadow: none;
+}
+
+.stat-card div{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+justify-content: space-between;
 }
 
 .stat-card .icon {
   font-size: 28px; /* Increased icon size */
 }
 
-.icon.green { color: #16a34a; }
-.icon.amber { color: #d97706; }
-.icon.rose { color: #e11d48; }
-.icon.emerald { color: #059669; }
+.stat-card .icon.green { color: #16a34a; }
+.stat-card .icon.amber { color: #d97706; }
+.stat-card .icon.rose { color: #e11d48; }
+.stat-card .icon.emerald { color: var(--mc); }
+
+html.dark .stat-card .icon.green { color: #4ade80; }
+html.dark .stat-card .icon.amber { color: #fbbf24; }
+html.dark .stat-card .icon.rose { color: #f87171; }
 
 /* BOTTOM */
 .dashboard-bottom {
@@ -140,16 +168,51 @@
 .timetable table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .timetable th,
 .timetable td {
-  text-align: center; /* Center-aligning text */
-  border-bottom: 1px solid #e5e7eb;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  color: var(--tc);
+  padding: 12px 16px;
 }
 
 .timetable thead {
-  background: #f1f5f9; /* Softer background */
+  background: var(--second-bg);
+}
+
+.timetable th {
+  color: var(--ts);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* Column widths for next schedule table */
+.timetable th:nth-child(1),
+.timetable td:nth-child(1) {
+  width: 15%; /* Tiết */
+}
+
+.timetable th:nth-child(2),
+.timetable td:nth-child(2) {
+  width: 30%; /* Thời gian */
+}
+
+.timetable th:nth-child(3),
+.timetable td:nth-child(3) {
+  width: 30%; /* Môn học */
+}
+
+.timetable th:nth-child(4),
+.timetable td:nth-child(4) {
+  width: 25%; /* Giáo viên */
+}
+
+/* Add hover effect for table rows */
+.timetable tbody tr:hover {
+  background: var(--second-bg);
 }
 
 /* ATTENDANCE */
@@ -158,13 +221,14 @@
   gap: 12px;
   margin-bottom: 16px;
   padding: 12px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 8px;
-  background: #f9fafb;
+  background: var(--second-bg);
 }
 
 .attendance-item:hover {
-  background: #f1f5f9;
+  background: var(--second-bg);
+  border-color: var(--mc);
 }
 
 .badge {
@@ -193,26 +257,48 @@
   width: 100%;
   padding: 12px;
   border: none;
-  background: #f8fafc;
+  background: var(--second-bg);
+  color: var(--tc);
   cursor: pointer;
   font-weight: 600;
 }
 
 .btn {
-  background-color: #059669;
-  color: white;
+  background-color: var(--mc);
+  color: var(--tw);
   border: none;
   padding: 10px 16px;
   border-radius: 8px;
   font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.2s;
 }
 
 .btn:hover {
-  background-color: #047857;
+  background-color: var(--mc-hover);
 }
 
-.attendance-recent .btn{
-    width: 100%
+.attendance-recent .btn {
+  width: 100%;
+}
+
+/* Dark mode: ensure text and hierarchy */
+html.dark .attendance-today,
+html.dark .timetable,
+html.dark .attendance-recent {
+  color: var(--tc);
+}
+
+html.dark .attendance-header p,
+html.dark .card-header h4,
+html.dark .attendance-recent h4 {
+  color: var(--ts);
+}
+
+html.dark .stat-card small {
+  color: var(--ts);
+}
+
+html.dark .stat-card strong {
+  color: var(--tc);
 }

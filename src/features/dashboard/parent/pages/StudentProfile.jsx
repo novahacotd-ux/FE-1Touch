@@ -12,23 +12,63 @@ import {
   FaFingerprint
 } from 'react-icons/fa';
 
-/* ================= MOCK DATA ================= */
-const MOCK_STUDENT = {
-  full_name: 'Nguyễn Minh Khang',
-  student_code: 'HS20240512',
-  avatar_url: 'https://i.pravatar.cc/300?img=12',
-  fingerprint_id: 'FP-102938',
-  gender: 'Nam',
-  dob: '15 / 05 / 2012',
-  phone: '090xxxx123',
-  email: 'khang.nm@student.edu.vn',
-  role: 'Lớp phó học tập'
-};
+/* ================= MOCK TABLES (match ERD names) ================= */
+const users = [
+  {
+    id: 2001,
+    username: 'parent01',
+    password: '***',
+    full_name: 'Nguyễn Thị B',
+    email: 'phuhuynh01@email.com',
+    phone: '090xxxx123',
+    role: 'PARENT',
+    status: 'ACTIVE',
+    created_at: '2024-01-01 08:00',
+    updated_at: '2024-05-01 08:00'
+  }
+];
 
-const MOCK_CLASS = {
-  class_name: '5A1'
-};
-/* ============================================= */
+const student_roles = [
+  { id: 1, role_code: 'VICE_LEADER', role_name: 'Lớp phó học tập', description: '', is_active: true }
+];
+
+const classes = [
+  { id: 1, class_name: '5A1', grade_id: 1, academic_year_id: 1, status: 'OPEN' }
+];
+
+const students = [
+  {
+    id: 'HS001',
+    student_code: 'HS20240512',
+    full_name: 'Nguyễn Minh Khang',
+    gender: 'Nam',
+    dob: '2012-05-15',
+    class_id: 1,
+    student_role_id: 1,
+    fingerprint_id: 'FP-102938',
+    status: 'ACTIVE'
+  }
+];
+
+const parents = [
+  {
+    id: 1,
+    user_id: 2001,
+    student_id: 'HS001',
+    full_name: 'Nguyễn Thị B',
+    phone: '090xxxx123',
+    zalo_id: 'zalo_001'
+  }
+];
+
+const student_avatar_url = 'https://i.pravatar.cc/300?img=12';
+/* ================================================================= */
+
+const currentStudent = students[0];
+const currentClass = classes.find(c => c.id === currentStudent.class_id);
+const currentRole = student_roles.find(r => r.id === currentStudent.student_role_id);
+const currentParent = parents.find(p => p.student_id === currentStudent.id);
+const currentParentUser = users.find(u => u.id === currentParent?.user_id);
 
 const StudentProfile = () => {
   return (
@@ -38,20 +78,20 @@ const StudentProfile = () => {
         <div className="profile-left">
           <div className="profile-card">
             <img
-              src={MOCK_STUDENT.avatar_url}
-              alt={MOCK_STUDENT.full_name}
+              src={student_avatar_url}
+              alt={currentStudent.full_name}
               className="profile-avatar"
             />
 
-            <h3>{MOCK_STUDENT.full_name}</h3>
-            <span className="student-code">{MOCK_STUDENT.student_code}</span>
+            <h3>{currentStudent.full_name}</h3>
+            <span className="student-code">{currentStudent.student_code}</span>
 
             <div className="profile-meta">
               <div className="meta-item">
                 <FaBookOpen />
                 <div>
                   <span>Lớp học</span>
-                  <strong>{MOCK_CLASS.class_name}</strong>
+                  <strong>{currentClass?.class_name ?? '—'}</strong>
                 </div>
               </div>
 
@@ -59,7 +99,7 @@ const StudentProfile = () => {
                 <FaFingerprint />
                 <div>
                   <span>Vân tay</span>
-                  <strong>{MOCK_STUDENT.fingerprint_id}</strong>
+                  <strong>{currentStudent.fingerprint_id}</strong>
                 </div>
               </div>
             </div>
@@ -74,32 +114,32 @@ const StudentProfile = () => {
             <div className="detail-grid">
               <div className="detail-item">
                 <label><FaUser /> Họ và tên</label>
-                <p>{MOCK_STUDENT.full_name}</p>
+                <p>{currentStudent.full_name}</p>
               </div>
 
               <div className="detail-item">
                 <label><FaCalendarAlt /> Ngày sinh</label>
-                <p>{MOCK_STUDENT.dob}</p>
+                <p>{currentStudent.dob}</p>
               </div>
 
               <div className="detail-item">
                 <label><FaUser /> Giới tính</label>
-                <p>{MOCK_STUDENT.gender}</p>
+                <p>{currentStudent.gender}</p>
               </div>
 
               <div className="detail-item">
                 <label><FaAward /> Vai trò lớp</label>
-                <p className="highlight">{MOCK_STUDENT.role}</p>
+                <p className="highlight">{currentRole?.role_name ?? '—'}</p>
               </div>
 
               <div className="detail-item">
                 <label><FaPhone /> SĐT liên hệ</label>
-                <p>{MOCK_STUDENT.phone}</p>
+                <p>{currentParentUser?.phone ?? currentParent?.phone ?? '—'}</p>
               </div>
 
               <div className="detail-item">
                 <label><FaEnvelope /> Email</label>
-                <p>{MOCK_STUDENT.email}</p>
+                <p>{currentParentUser?.email ?? '—'}</p>
               </div>
             </div>
           </div>

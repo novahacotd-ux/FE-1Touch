@@ -15,33 +15,43 @@ export const LeaveRequestStatus = {
   REJECTED: 'REJECTED'
 };
 
-/* ===== MOCK STUDENT ===== */
-const MOCK_STUDENT = {
-  id: 'HS001',
-  full_name: 'Nguyễn Văn A'
-};
+/* ================= MOCK TABLES (match ERD names) ================= */
+const students = [
+  { id: 'HS001', student_code: 'HS001', full_name: 'Nguyễn Văn A', gender: 'Nam', dob: '2012-05-15', class_id: 1, student_role_id: 1, fingerprint_id: 'FP-001', status: 'ACTIVE' }
+];
+
+const parents = [
+  { id: 1, user_id: 2001, student_id: 'HS001', full_name: 'Nguyễn Thị B', phone: '090xxxx123', zalo_id: 'zalo_001' }
+];
 
 /* ===== MOCK LEAVE REQUEST (đúng ERD) ===== */
-const MOCK_LEAVE_REQUESTS = [
+const leave_requests = [
   {
     id: 1,
+    parent_id: 1,
     student_id: 'HS001',
     from_date: '2024-05-12',
     to_date: '2024-05-13',
     reason: 'Bị sốt, cần nghỉ ngơi',
     status: LeaveRequestStatus.PENDING,
-    created_at: '2024-05-10 08:30'
+    approved_by: null,
+    created_at: '2024-05-10 08:30',
+    updated_at: '2024-05-10 08:30'
   },
   {
     id: 2,
+    parent_id: 1,
     student_id: 'HS001',
     from_date: '2024-04-02',
     to_date: '2024-04-02',
     reason: 'Có việc gia đình',
     status: LeaveRequestStatus.APPROVED,
-    created_at: '2024-04-01 19:10'
+    approved_by: 101,
+    created_at: '2024-04-01 19:10',
+    updated_at: '2024-04-02 08:00'
   }
 ];
+/* ================================================================= */
 
 const LeaveRequest = () => {
   const [showForm, setShowForm] = useState(false);
@@ -86,7 +96,7 @@ const LeaveRequest = () => {
             </div>
             <div>
               <h4>Tạo đơn xin nghỉ học</h4>
-              <p>Học sinh: {MOCK_STUDENT.full_name}</p>
+              <p>Học sinh: {students[0].full_name}</p>
             </div>
           </div>
 
@@ -156,7 +166,7 @@ const LeaveRequest = () => {
             </div>
           </div>
 
-          {MOCK_LEAVE_REQUESTS.map((req) => (
+          {leave_requests.map((req) => (
             <div key={req.id} className="history-item">
               <div className="status-row">
                 <span className={`status ${req.status.toLowerCase()}`}>

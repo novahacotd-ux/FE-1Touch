@@ -11,40 +11,82 @@ export const AttendanceStatus = {
   ABSENT_UNEXCUSED: 'ABSENT_UNEXCUSED'
 };
 
-/* ===== MOCK DATA (đúng ERD attendance) ===== */
-const MOCK_ATTENDANCE = [
-  {
-    id: 1,
-    student_id: 'HS001',
-    subject_name: 'Toán',
-    session_date: '2024-05-10',
-    checkin_time: '07:30',
-    checkout_time: '09:00',
-    status: AttendanceStatus.PRESENT,
-    note: ''
-  },
-  {
-    id: 2,
-    student_id: 'HS001',
-    subject_name: 'Văn',
-    session_date: '2024-05-10',
-    checkin_time: '07:45',
-    checkoutout_time: '09:15',
-    checkout_time: '09:15',
-    status: AttendanceStatus.LATE,
-    note: 'Kẹt xe'
-  },
-  {
-    id: 3,
-    student_id: 'HS001',
-    subject_name: 'Anh',
-    session_date: '2024-05-08',
-    checkin_time: null,
-    checkout_time: null,
-    status: AttendanceStatus.ABSENT_UNEXCUSED,
-    note: ''
-  }
+/* ================= MOCK TABLES (match ERD names) ================= */
+const subjects = [
+  { id: 1, subject_code: 'TOAN', subject_name: 'Toán', is_active: true },
+  { id: 2, subject_code: 'VAN', subject_name: 'Văn', is_active: true },
+  { id: 3, subject_code: 'ANH', subject_name: 'Anh', is_active: true }
 ];
+
+// attendance_sessions (ERD)
+const attendance_sessions = [
+  { id: 1, timetable_entry_id: 1, session_date: '2024-05-10', start_time: '07:00', end_time: '07:45' },
+  { id: 2, timetable_entry_id: 2, session_date: '2024-05-10', start_time: '07:50', end_time: '08:35' },
+  { id: 3, timetable_entry_id: 3, session_date: '2024-05-08', start_time: '07:00', end_time: '07:45' }
+];
+
+// timetable_entries (ERD) - used to resolve subject for each session
+const timetable_entries = [
+  { id: 1, timetable_id: 1, date_of_week: 5, start_time: '07:00', end_time: '07:45', subject_id: 1, teacher_id: 101 },
+  { id: 2, timetable_id: 1, date_of_week: 5, start_time: '07:50', end_time: '08:35', subject_id: 2, teacher_id: 102 },
+  { id: 3, timetable_id: 1, date_of_week: 3, start_time: '07:00', end_time: '07:45', subject_id: 3, teacher_id: 103 }
+];
+
+// attendance_records (ERD)
+const attendance_records = [
+  { id: 1, attendance_session_id: 1, student_id: 'HS001', status: AttendanceStatus.PRESENT, note: '' },
+  { id: 2, attendance_session_id: 2, student_id: 'HS001', status: AttendanceStatus.LATE, note: 'Kẹt xe' },
+  { id: 3, attendance_session_id: 3, student_id: 'HS001', status: AttendanceStatus.ABSENT_UNEXCUSED, note: '' }
+];
+
+// attendance_logs (ERD) - raw fingerprint logs (IN/OUT)
+const attendance_logs = [
+  { id: 1, student_id: 'HS001', log_time: '2024-05-10T07:02:10', log_type: 'IN' },
+  { id: 2, student_id: 'HS001', log_time: '2024-05-10T07:45:05', log_type: 'OUT' },
+  { id: 3, student_id: 'HS001', log_time: '2024-05-10T07:55:30', log_type: 'IN' },
+  { id: 4, student_id: 'HS001', log_time: '2024-05-10T08:35:12', log_type: 'OUT' }
+];
+/* ================================================================= */
+
+const getSubjectNameBySessionId = (attendanceSessionId) => {
+  const session = attendance_sessions.find(s => s.id === attendanceSessionId);
+  if (!session) return 'N/A';
+  const entry = timetable_entries.find(e => e.id === session.timetable_entry_id);
+  if (!entry) return 'N/A';
+  const subject = subjects.find(s => s.id === entry.subject_id);
+  return subject ? subject.subject_name : 'N/A';
+};
+
+const getCheckinCheckoutBySession = (attendanceSessionId, studentId) => {
+  // naive derivation: find first IN and last OUT on that session date
+  const session = attendance_sessions.find(s => s.id === attendanceSessionId);
+  if (!session) return { checkin_time: null, checkout_time: null };
+  const datePrefix = session.session_date; // YYYY-MM-DD
+  const logs = attendance_logs
+    .filter(l => l.student_id === studentId && l.log_time.startsWith(datePrefix))
+    .sort((a, b) => a.log_time.localeCompare(b.log_time));
+
+  const firstIn = logs.find(l => l.log_type === 'IN');
+  const lastOut = [...logs].reverse().find(l => l.log_type === 'OUT');
+
+  const toHHMM = (iso) => (iso ? iso.split('T')[1]?.slice(0, 5) : null);
+  return { checkin_time: toHHMM(firstIn?.log_time), checkout_time: toHHMM(lastOut?.log_time) };
+};
+
+const attendance_view = attendance_records.map(r => {
+  const session = attendance_sessions.find(s => s.id === r.attendance_session_id);
+  const times = getCheckinCheckoutBySession(r.attendance_session_id, r.student_id);
+  return {
+    id: r.id,
+    student_id: r.student_id,
+    session_date: session?.session_date ?? '',
+    subject_name: getSubjectNameBySessionId(r.attendance_session_id),
+    checkin_time: times.checkin_time,
+    checkout_time: times.checkout_time,
+    status: r.status,
+    note: r.note
+  };
+});
 
 /* ===== STATUS CLASS ===== */
 const STATUS_CLASS = {
@@ -58,7 +100,7 @@ const ParentAttendance = () => {
   const [filter, setFilter] = useState('all');
   const [selectedMonth, setSelectedMonth] = useState('05');
 
-  const filteredRecords = MOCK_ATTENDANCE.filter(r => {
+  const filteredRecords = attendance_view.filter(r => {
     const matchStatus = filter === 'all' || r.status === filter;
     const matchMonth = r.session_date.split('-')[1] === selectedMonth;
     return matchStatus && matchMonth;
