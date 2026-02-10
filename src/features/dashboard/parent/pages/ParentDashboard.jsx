@@ -165,16 +165,16 @@ const ParentDashboard = ({ onNavigate }) => {
     }
     switch (key) {
       case 'timetable':
-        navigate('/parent/timetable');
+        navigate('/parent/schedule');
         break;
       case 'attendance':
         navigate('/parent/attendance');
         break;
       case 'leave':
-        navigate('/parent/leave');
+        navigate('/parent/leave-request');
         break;
       case 'student':
-        navigate('/parent/student');
+        navigate('/parent/student-profile');
         break;
       case 'notifications':
         navigate('/parent/notifications');

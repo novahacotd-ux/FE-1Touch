@@ -20,12 +20,13 @@ const ParentSidebar = () => {
     // or fallbacking to keys that likely exist.
     const menu = [
         { key: 'dashboard', path: '/parent', label: t('dashboard'), icon: <FiHome />, end: true },
-        { key: 'timetable', path: '/parent/timetable', label: t('timetable'), icon: <FiCalendar /> },
+        { key: 'timetable', path: '/parent/schedule', label: t('timetable'), icon: <FiCalendar /> },
         { key: 'attendance', path: '/parent/attendance', label: t('attendance'), icon: <FiCheckCircle /> },
-        { key: 'leave', path: '/parent/leave', label: t('leaveRequests'), icon: <FiFileText /> },
-        { key: 'student', path: '/parent/student', label: t('studentProfile'), icon: <FiUser /> },
+        { key: 'leave', path: '/parent/leave-request', label: t('leaveRequests'), icon: <FiFileText /> },
+        { key: 'student', path: '/parent/student-profile', label: t('studentProfile'), icon: <FiUser /> },
         { key: 'notifications', path: '/parent/notifications', label: t('notifications'), icon: <FiBell /> },
     ]
+
     return (
         <aside className={`parent-sidebar ${collapsed ? 'collapsed' : ''}`}>
             <div className="parent-sidebar-logo">

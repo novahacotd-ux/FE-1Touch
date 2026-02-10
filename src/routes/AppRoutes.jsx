@@ -15,14 +15,14 @@ import AdminStudents from "../features/students/pages/AdminStudents";
 import AdminSystemStructure from "../features/system/pages/AdminSystemStructure";
 import AdminTimetables from "../features/Timetables/pages/AdminTimetables";
 import AdminAttendance from "../features/attendance/pages/AdminAttendance";
-
 import ParentLayout from "../features/dashboard/parent/layouts/ParentLayout";
+
 import ParentDashboard from "../features/dashboard/parent/pages/ParentDashboard";
-import ParentSchedule from "../features/dashboard/parent/pages/ParentSchedule.jsx";
-import ParentAttendance from "../features/dashboard/parent/pages/ParentAttendance.jsx";
-import LeaveRequest from "../features/dashboard/parent/pages/LeaveRequest.jsx";
-import Notifications from "../features/dashboard/parent/pages/Notifications.jsx";
-import StudentProfile from "../features/dashboard/parent/pages/StudentProfile.jsx";
+import ParentSchedule from "../features/dashboard/parent/pages/ParentSchedule";
+import ParentAttendance from "../features/dashboard/parent/pages/ParentAttendance";
+import LeaveRequest from "../features/dashboard/parent/pages/LeaveRequest";
+import StudentProfile from "../features/dashboard/parent/pages/StudentProfile";
+import Notifications from "../features/dashboard/parent/pages/Notifications";
 
 const AppRoutes = () => {
     return (
@@ -127,11 +127,12 @@ const AppRoutes = () => {
             {/* Parent Routes */}
             <Route path="/parent" element={<ParentLayout />}>
                 <Route index element={<ParentDashboard />} />
-                <Route path="timetable" element={<ParentSchedule />} />
-                <Route path="attendance" element={<ParentAttendance />} />
-                <Route path ="leave" element={<LeaveRequest />} />
                 <Route path="notifications" element={<Notifications />} />
-                <Route path="student" element={<StudentProfile />} />
+                <Route path="schedule" element={<ParentSchedule />} />
+                <Route path="attendance" element={<ParentAttendance />} />
+                <Route path="leave-request" element={<LeaveRequest />} />
+                <Route path="student-profile" element={<StudentProfile />} />
+
             </Route>
         </Routes>
     );
