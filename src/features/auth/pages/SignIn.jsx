@@ -2,6 +2,12 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import "./SignIn.css";
 
+const MOCK_ACCOUNTS = [
+    { username: 'admin', password: 'admin123', role: 'admin', redirect: '/admin' },
+    { username: 'teacher', password: 'teacher123', role: 'teacher', redirect: '/teacher' },
+    { username: 'parent', password: 'parent123', role: 'parent', redirect: '/parent' },
+];
+
 const SignIn = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -11,9 +17,11 @@ const SignIn = () => {
         password: '',
         confirmPassword: ''
     });
+    const [error, setError] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        setError('');
         setFormData(prev => ({
             ...prev,
             [name]: value
@@ -22,8 +30,15 @@ const SignIn = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-        navigate('/admin');
+        const account = MOCK_ACCOUNTS.find(
+            acc => acc.username === formData.username && acc.password === formData.password
+        );
+        if (account) {
+            localStorage.setItem('user', JSON.stringify({ username: account.username, role: account.role }));
+            navigate(account.redirect);
+        } else {
+            setError('Tài khoản hoặc mật khẩu không đúng!');
+        }
     };
 
     return (
@@ -130,6 +145,7 @@ const SignIn = () => {
                                             <div className="signin1t-hr">
                                                 <span></span>
                                             </div>
+                                            {error && <div style={{ color: '#ef4444', fontWeight: 700, fontSize: 13, marginBottom: 8, textAlign: 'center' }}>{error}</div>}
                                             <div className="signin1t-fields">
                                                 <div className="form-group">
                                                     <label htmlFor="username">Username</label>
@@ -155,7 +171,7 @@ const SignIn = () => {
                                                 </div>
                                             </div>
                                             <div className="signin1t-buttons">
-                                                <button type="submit" className="btn btn-primary w-100">Sign up</button>
+                                                <button type="submit" className="btn btn-primary w-100">Sign in</button>
                                             </div>
                                         </form>
                                         <div className="signin1t-again">
