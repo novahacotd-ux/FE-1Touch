@@ -1,5 +1,19 @@
+// Schedule.jsx
 import { useState } from 'react';
+import {
+    FiCalendar,
+    FiClock,
+    FiBook,
+    FiUsers,
+    FiGrid,
+    FiList,
+} from 'react-icons/fi';
 import './Schedule.css';
+
+// Import admin components
+import Card from '../../admin/components/ui/Card';
+import { Pill } from '../../admin/components/ui/Pills';
+import Select from '../../admin/components/ui/Select';
 
 // Mock data - Danh sách lớp giáo viên đang dạy
 const teachingClasses = [
@@ -30,43 +44,35 @@ const weekDays = [
 
 // Mock data - Thời khóa biểu
 const timetableData = [
-    // Thứ 2
     { dayId: 2, periodId: 1, subject: 'Toán', className: '6A', room: 'P.201' },
     { dayId: 2, periodId: 2, subject: 'Toán', className: '6B', room: 'P.202' },
     { dayId: 2, periodId: 4, subject: 'Toán', className: '7A', room: 'P.301' },
-    // Thứ 3
     { dayId: 3, periodId: 1, subject: 'Toán', className: '7B', room: 'P.302' },
     { dayId: 3, periodId: 3, subject: 'Toán', className: '6A', room: 'P.201' },
     { dayId: 3, periodId: 5, subject: 'Toán', className: '6B', room: 'P.202' },
-    // Thứ 4
     { dayId: 4, periodId: 2, subject: 'Toán', className: '7A', room: 'P.301' },
     { dayId: 4, periodId: 3, subject: 'Toán', className: '7B', room: 'P.302' },
     { dayId: 4, periodId: 5, subject: 'Toán', className: '6A', room: 'P.201' },
-    // Thứ 5
     { dayId: 5, periodId: 1, subject: 'Toán', className: '6B', room: 'P.202' },
     { dayId: 5, periodId: 2, subject: 'Toán', className: '6A', room: 'P.201' },
     { dayId: 5, periodId: 4, subject: 'Toán', className: '7A', room: 'P.301' },
-    // Thứ 6
     { dayId: 6, periodId: 1, subject: 'Toán', className: '7B', room: 'P.302' },
     { dayId: 6, periodId: 3, subject: 'Toán', className: '6B', room: 'P.202' },
     { dayId: 6, periodId: 4, subject: 'Toán', className: '7A', room: 'P.301' },
-    // Thứ 7
     { dayId: 7, periodId: 2, subject: 'Toán', className: '6A', room: 'P.201' },
     { dayId: 7, periodId: 3, subject: 'Toán', className: '7B', room: 'P.302' },
 ];
 
 function Schedule() {
-    const [viewMode, setViewMode] = useState('week'); // 'day' or 'week'
+    const [viewMode, setViewMode] = useState('week');
     const [selectedDay, setSelectedDay] = useState(getCurrentDayId());
     const [selectedClass, setSelectedClass] = useState('all');
 
-    // Get current day of week (2-7, with 2 being Monday)
     function getCurrentDayId() {
         const day = new Date().getDay();
-        return day === 0 ? 2 : (day === 1 ? 2 : day + 1); // Map Sunday to Monday
+        return day === 0 ? 2 : (day === 1 ? 2 : day + 1);
     }
 
-    // Get current week dates
     function getWeekDates() {
         const today = new Date();
         const currentDay = today.getDay();
@@ -87,7 +93,6 @@ function Schedule() {
 
     const weekDates = getWeekDates();
 
-    // Filter timetable data
     const getFilteredData = (dayId, periodId) => {
         return timetableData.find(item => {
             const dayMatch = item.dayId === dayId;
@@ -97,7 +102,6 @@ function Schedule() {
         });
     };
 
-    // Get lessons for a specific day
     const getDayLessons = (dayId) => {
         return timetableData.filter(item => {
             const classMatch = selectedClass === 'all' || item.className === selectedClass;
@@ -105,59 +109,56 @@ function Schedule() {
         });
     };
 
-    // Count total lessons
     const totalLessons = timetableData.filter(item =>
         selectedClass === 'all' || item.className === selectedClass
     ).length;
 
+    const classOptions = [
+        { value: 'all', label: 'Tất cả lớp' },
+        ...teachingClasses.map(cls => ({ value: cls.className, label: `${cls.className} - ${cls.grade}` }))
+    ];
+
     return (
-        <div className="container-fluid container-dashboard-db" style={{ padding: '10px 20px' }}>
+        <div className="admin-dash">
             {/* Header */}
-            <div className="schedule-header card-db">
-                <div className="schedule-header-left">
-                    <h2 className="schedule-title">
-                        <i className="fas fa-calendar-alt"></i>
-                        Thời khóa biểu
-                    </h2>
-                    <span className="schedule-subtitle">
-                        {totalLessons} tiết/tuần
-                    </span>
+            <div className="admin-dash__top">
+                <div className="admin-dash__title">
+                    <div className="admin-dash__titleBadge">
+                        <FiCalendar />
+                    </div>
+                    <div className="admin-dash__titleText">
+                        <div className="h1">Thời khóa biểu</div>
+                        <div className="sub">{totalLessons} tiết/tuần</div>
+                    </div>
                 </div>
 
-                <div className="schedule-controls">
-                    {/* Class Filter */}
-                    <div className="control-group">
-                        <label>Lọc theo lớp:</label>
-                        <select
-                            className="form-select"
-                            value={selectedClass}
-                            onChange={(e) => setSelectedClass(e.target.value)}
-                        >
-                            <option value="all">Tất cả lớp</option>
-                            {teachingClasses.map(cls => (
-                                <option key={cls.id} value={cls.className}>
-                                    {cls.className} - {cls.grade}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                <div className="admin-dash__filters">
+                    <div className="filterRow">
+                        <div className="filter">
+                            <div className="filterLabel">
+                                <FiUsers /> Lọc theo lớp
+                            </div>
+                            <Select
+                                value={selectedClass}
+                                onChange={setSelectedClass}
+                                options={classOptions}
+                            />
+                        </div>
 
-                    {/* View Mode Toggle */}
-                    <div className="view-toggle">
-                        <button
-                            className={`toggle-btn ${viewMode === 'day' ? 'active' : ''}`}
-                            onClick={() => setViewMode('day')}
-                        >
-                            <i className="fas fa-calendar-day"></i>
-                            Ngày
-                        </button>
-                        <button
-                            className={`toggle-btn ${viewMode === 'week' ? 'active' : ''}`}
-                            onClick={() => setViewMode('week')}
-                        >
-                            <i className="fas fa-calendar-week"></i>
-                            Tuần
-                        </button>
+                        <div className="view-toggle">
+                            <button
+                                className={`chip ${viewMode === 'day' ? 'chip--on' : ''}`}
+                                onClick={() => setViewMode('day')}
+                            >
+                                <FiList /> Ngày
+                            </button>
+                            <button
+                                className={`chip ${viewMode === 'week' ? 'chip--on' : ''}`}
+                                onClick={() => setViewMode('week')}
+                            >
+                                <FiGrid /> Tuần
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -181,7 +182,12 @@ function Schedule() {
 
             {/* Week View */}
             {viewMode === 'week' && (
-                <div className="timetable-grid card-db">
+                <Card
+                    title="Lịch tuần"
+                    icon={<FiGrid />}
+                    subtitle="Xem tổng quan thời khóa biểu trong tuần"
+                    right={<Pill tone="info">{totalLessons} tiết</Pill>}
+                >
                     <div className="timetable-wrapper">
                         <table className="timetable-table">
                             <thead>
@@ -219,7 +225,6 @@ function Schedule() {
                                                             <span className="lesson-subject">{lesson.subject}</span>
                                                             <span className="lesson-class">{lesson.className}</span>
                                                             <span className="lesson-room">
-                                                                <i className="fas fa-door-open"></i>
                                                                 {lesson.room}
                                                             </span>
                                                         </div>
@@ -232,84 +237,72 @@ function Schedule() {
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </Card>
             )}
 
             {/* Day View */}
             {viewMode === 'day' && (
-                <div className="day-schedule card-db">
-                    <div className="card-db-header">
-                        <i className="fas fa-list"></i>
-                        <span>
-                            {weekDates.find(d => d.id === selectedDay)?.name} - {weekDates.find(d => d.id === selectedDay)?.date}/{weekDates.find(d => d.id === selectedDay)?.month}
-                        </span>
-                    </div>
-                    <div className="card-db-body">
-                        <div className="day-lessons-list">
-                            {periods.map(period => {
-                                const lesson = getFilteredData(selectedDay, period.id);
-                                return (
-                                    <div
-                                        key={period.id}
-                                        className={`day-lesson-item ${lesson ? 'has-lesson' : 'free'}`}
-                                    >
-                                        <div className="lesson-time">
-                                            <span className="period-number">{period.name}</span>
-                                            <span className="period-hours">{period.time}</span>
-                                        </div>
-                                        <div className="lesson-content">
-                                            {lesson ? (
-                                                <>
-                                                    <div className="lesson-main">
-                                                        <span className="subject-name">{lesson.subject}</span>
-                                                        <span className="class-badge">{lesson.className}</span>
-                                                    </div>
-                                                    <div className="lesson-meta">
-                                                        <span className="room-info">
-                                                            <i className="fas fa-door-open"></i>
-                                                            {lesson.room}
-                                                        </span>
-                                                    </div>
-                                                </>
-                                            ) : (
-                                                <span className="free-text">Không có tiết</span>
-                                            )}
-                                        </div>
+                <Card
+                    title={`${weekDates.find(d => d.id === selectedDay)?.name} - ${weekDates.find(d => d.id === selectedDay)?.date}/${weekDates.find(d => d.id === selectedDay)?.month}`}
+                    icon={<FiList />}
+                    subtitle="Lịch dạy trong ngày"
+                    right={<Pill tone="info">{getDayLessons(selectedDay).length} tiết</Pill>}
+                >
+                    <div className="day-lessons-list">
+                        {periods.map(period => {
+                            const lesson = getFilteredData(selectedDay, period.id);
+                            return (
+                                <div
+                                    key={period.id}
+                                    className={`day-lesson-item ${lesson ? 'has-lesson' : 'free'}`}
+                                >
+                                    <div className="lesson-time">
+                                        <span className="period-number">{period.name}</span>
+                                        <span className="period-hours">{period.time}</span>
                                     </div>
-                                );
-                            })}
-                        </div>
+                                    <div className="lesson-content">
+                                        {lesson ? (
+                                            <>
+                                                <div className="lesson-main">
+                                                    <span className="subject-name">{lesson.subject}</span>
+                                                    <span className="tag tag--info">{lesson.className}</span>
+                                                </div>
+                                                <div className="lesson-meta">
+                                                    <span className="tag tag--muted">{lesson.room}</span>
+                                                </div>
+                                            </>
+                                        ) : (
+                                            <span className="free-text">Không có tiết</span>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
-                </div>
+                </Card>
             )}
 
             {/* Summary Stats */}
-            <div className="schedule-stats">
-                <div className="stat-card">
-                    <div className="stat-icon">
-                        <i className="fas fa-book"></i>
-                    </div>
-                    <div className="stat-info">
-                        <span className="stat-value">{totalLessons}</span>
-                        <span className="stat-label">Tổng tiết/tuần</span>
+            <div className="grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+                <div className="fact">
+                    <div className="factIcon"><FiBook /></div>
+                    <div>
+                        <div className="factValue">{totalLessons}</div>
+                        <div className="factLabel">Tổng tiết/tuần</div>
                     </div>
                 </div>
-                <div className="stat-card">
-                    <div className="stat-icon">
-                        <i className="fas fa-chalkboard"></i>
-                    </div>
-                    <div className="stat-info">
-                        <span className="stat-value">{teachingClasses.length}</span>
-                        <span className="stat-label">Lớp giảng dạy</span>
+                <div className="fact">
+                    <div className="factIcon"><FiUsers /></div>
+                    <div>
+                        <div className="factValue">{teachingClasses.length}</div>
+                        <div className="factLabel">Lớp giảng dạy</div>
                     </div>
                 </div>
-                <div className="stat-card">
-                    <div className="stat-icon">
-                        <i className="fas fa-clock"></i>
-                    </div>
-                    <div className="stat-info">
-                        <span className="stat-value">{getDayLessons(selectedDay).length}</span>
-                        <span className="stat-label">Tiết hôm nay</span>
+                <div className="fact">
+                    <div className="factIcon"><FiClock /></div>
+                    <div>
+                        <div className="factValue">{getDayLessons(selectedDay).length}</div>
+                        <div className="factLabel">Tiết hôm nay</div>
                     </div>
                 </div>
             </div>

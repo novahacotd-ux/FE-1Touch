@@ -1,156 +1,89 @@
-import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import './TeacherHeader.css';
+import { FiGlobe, FiMoon, FiSun, FiUser, FiLogOut } from 'react-icons/fi';
 import { useTheme } from '../../../../../context/useTheme';
 import { useLanguage } from '../../../../../context/useLanguage';
-import "./TeacherHeader.css"
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const TeacherHeader = ({ onMenuToggle, pageTitle = 'Dashboard' }) => {
-    const { theme, setDark, setLight } = useTheme();
+const TeacherHeader = () => {
+    const { theme, setLight, setDark } = useTheme();
+    const { language, toggleLanguage, t } = useLanguage();
+    const [showDrp, setShowDrp] = useState(false);
     const navigate = useNavigate();
 
-    const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
-
-    const accountDropdownRef = useRef(null);
-
-    // Close dropdowns when clicking outside
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (accountDropdownRef.current && !accountDropdownRef.current.contains(event.target)) {
-                setIsAccountDropdownOpen(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
-
     const handleLogout = () => {
+        setShowDrp(false);
         navigate('/');
-    };
-
-    const currencies = [
-        { code: 'USD', symbol: '$', name: 'US Dollar' },
-        { code: 'EUR', symbol: '€', name: 'Euro' },
-        { code: 'GBP', symbol: '£', name: 'British Pound' },
-        { code: 'INR', symbol: '₹', name: 'Indian Rupee' }
-    ];
-
-    const formatBalance = (balance) => {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD'
-        }).format(balance || 0);
-    };
+    }
 
     return (
-        <div className="dashboard-hd teacher-header-scope">
-            <div className="header-row">
-                {/* Mobile Menu Toggle */}
-                <button
-                    className="header-menu-toggle d-lg-none"
-                    onClick={onMenuToggle}
-                >
-                    <i className="fas fa-bars"></i>
-                </button>
+        <header className="admin-header">
+            <div className="admin-header-left">
+                <span className="admin-header-title">
+                    {t('teacherDashboard') || 'Teacher Dashboard'}
+                </span>
+            </div>
 
-                {/* Breadcrumb / Page Title */}
-                <div className="header-start">
-                    <nav className="breadcrumb">
-                        <a href="/dashboard">{pageTitle}</a>
-                    </nav>
-                </div>
-
-                <div className="header-end">
-
-                    {/* Account Dropdown */}
+            <div className="admin-header-right">
+                <div className="admin-header-user-wrapper">
                     <div
-                        className="ui-dropdown"
-                        ref={accountDropdownRef}
+                        className="admin-header-user"
+                        onClick={() => setShowDrp(!showDrp)}
+                        style={{ cursor: 'pointer' }}
                     >
-                        <button
-                            className="btn-line-icon"
-                            onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
-                        >
-                            <span className="btn-icon btn-avatar">
-                                <i className="fas fa-user"></i>
-                                <span className="avatar-dot"></span>
-                            </span>
-                            <span className="btn-chevron">
-                                <i className={`fas fa-chevron-${isAccountDropdownOpen ? 'up' : 'down'}`}></i>
-                            </span>
-                        </button>
+                        <FiUser />
+                        <span className="admin-header-user-name">{t('teacher') || 'Giáo viên'}</span>
+                    </div>
 
-                        {/* Account Dropdown Menu */}
-                        <div
-                            id="home-settings"
-                            aria-labelledby="dropdownAccount"
-                            className={`dropdown-menu dd-menu ${isAccountDropdownOpen ? 'show' : ''}`}
-                            style={{ position: 'absolute', top: '100%', right: '0', marginTop: '8px' }}
-                        >
+                    {showDrp && (
+                        <div className="admin-header-dropdown">
                             {/* User Info */}
                             <div className="acc-user">
-                                <div style={{ width: '100%' }}>
-                                    <div className="acc-name">User</div>
-                                    <div className="acc-mail">user@example.com</div>
-                                </div>
-                                <a className="btn btn-primary" href="/teacher/account">
-                                    Account
-                                </a>
+                                <span className="acc-name">{t('teacher') || 'Giáo viên'}</span>
+                                <span className="acc-mail">teacher@example.com</span>
                             </div>
 
                             {/* Language Switcher */}
                             <div className="acc-section">
-                                <span>Language</span>
-                                <div className="lang-switcher">
-                                    <span>English</span>
-                                    <i className="fa-solid fa-angle-right"></i>
+                                <span>{t('language') || 'Ngôn ngữ'}</span>
+                                <div className="lang-switcher" onClick={toggleLanguage}>
+                                    <span>{language === 'en' ? 'English' : 'Tiếng Việt'}</span>
+                                    <FiGlobe />
                                 </div>
                             </div>
 
                             {/* Theme Mode Switcher */}
                             <div className="acc-section">
-                                <span>Theme Mode</span>
-                                <div className="switcher" data-active={theme}>
+                                <span>{t('theme') || 'Giao diện'}</span>
+                                <div className="switcher">
                                     <button
-                                        className={`switcher-item light-btn ${theme === 'light' ? 'active' : ''}`}
-                                        onClick={() => setLight()}
+                                        className={`switcher-item ${theme === 'light' ? 'active' : ''}`}
+                                        onClick={setLight}
                                         aria-label="Light"
                                     >
-                                        <i className="fas fa-sun"></i>
+                                        <FiSun />
                                     </button>
                                     <button
-                                        className={`switcher-item dark-btn ${theme === 'dark' ? 'active' : ''}`}
-                                        onClick={() => setDark()}
+                                        className={`switcher-item ${theme === 'dark' ? 'active' : ''}`}
+                                        onClick={setDark}
                                         aria-label="Dark"
                                     >
-                                        <i className="fas fa-moon"></i>
+                                        <FiMoon />
                                     </button>
                                 </div>
                             </div>
 
-                            {/* Menu Links */}
-                            <div className="acc-alt mt-1">
-                                <ul className="dropdown-list">
-                                    <li>
-                                        <button
-                                            className="dropdown-link"
-                                            onClick={handleLogout}
-                                            style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer' }}
-                                        >
-                                            <span className="dropdown-icon text-danger">
-                                                <i class="fa-solid fa-power-off"></i>
-                                            </span>
-                                            Logout
-                                        </button>
-                                    </li>
-                                </ul>
+                            <div className="admin-header-dropdown-item" onClick={handleLogout} style={{ marginTop: '5px' }}>
+                                <FiLogOut />
+                                <span>{t('logout') || 'Đăng xuất'}</span>
                             </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
-        </div>
+        </header>
     );
 };
+
 
 export default TeacherHeader;

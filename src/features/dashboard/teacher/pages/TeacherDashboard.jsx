@@ -1,4 +1,20 @@
-import './TeacherDashboard.css';
+// TeacherDashboard.jsx
+import React from "react";
+import {
+    FiClock,
+    FiUsers,
+    FiBook,
+    FiCheckCircle,
+    FiCalendar,
+    FiUser,
+} from "react-icons/fi";
+
+// Styles
+import "../pages/TeacherDashboard.css";
+
+// Import Card component from admin
+import Card from "../../admin/components/ui/Card";
+import { Pill } from "../../admin/components/ui/Pills";
 
 // Mock data - Tiết học hôm nay
 const todayLessons = [
@@ -27,7 +43,7 @@ const attendanceStats = {
     excused: 0,
 };
 
-function TeacherDashboard() {
+export default function TeacherDashboard() {
     const today = new Date();
     const dayNames = ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'];
     const formattedDate = `${dayNames[today.getDay()]}, ${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
@@ -54,42 +70,63 @@ function TeacherDashboard() {
         }
     };
 
+    const activeLessons = todayLessons.filter(l => l.subject).length;
+
     return (
-        <div className="container-fluid container-dashboard-db" style={{ padding: '10px 20px' }}>
-            {/* Welcome Banner */}
-            <div className="top-box">
-                <div className="top-box-left">
-                    <div className="welcome-icon">
-                        <i className="fas fa-chalkboard-teacher"></i>
+        <div className="admin-dash">
+            {/* Header strip */}
+            <div className="admin-dash__top">
+                <div className="admin-dash__title">
+                    <div className="admin-dash__titleBadge">
+                        <FiUser />
                     </div>
-                    <div className="top-text">
-                        <h4>
-                            Xin chào, <span>Giáo viên!</span>
-                        </h4>
-                        <p>{formattedDate}</p>
+                    <div className="admin-dash__titleText">
+                        <div className="h1">Xin chào, Giáo viên!</div>
+                        <div className="sub">{formattedDate}</div>
                     </div>
                 </div>
-                <div className="top-box-right">
-                    <div className="quick-stats">
-                        <div className="quick-stat-item">
-                            <span className="stat-number">{todayLessons.filter(l => l.subject).length}</span>
-                            <span className="stat-label">Tiết hôm nay</span>
-                        </div>
-                        <div className="quick-stat-item">
-                            <span className="stat-number">{teachingClasses.length}</span>
-                            <span className="stat-label">Lớp giảng dạy</span>
+
+                <div className="admin-dash__filters">
+                    <div className="filterRow">
+                        <div className="kpiFacts" style={{ display: 'flex', gap: '16px' }}>
+                            <div className="fact">
+                                <div className="factIcon"><FiCalendar /></div>
+                                <div>
+                                    <div className="factLabel">Tiết hôm nay</div>
+                                    <div className="factValue">{activeLessons}</div>
+                                </div>
+                            </div>
+                            <div className="fact">
+                                <div className="factIcon"><FiBook /></div>
+                                <div>
+                                    <div className="factLabel">Lớp giảng dạy</div>
+                                    <div className="factValue">{teachingClasses.length}</div>
+                                </div>
+                            </div>
+                            <div className="fact">
+                                <div className="factIcon"><FiUsers /></div>
+                                <div>
+                                    <div className="factLabel">Tổng học sinh</div>
+                                    <div className="factValue">{attendanceStats.totalStudents}</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Tiết học hôm nay */}
-            <div className="card-db dashboard-section">
-                <div className="card-db-header">
-                    <i className="fas fa-clock"></i>
-                    <span>Tiết học hôm nay</span>
-                </div>
-                <div className="card-db-body">
+            {/* Row 1 — Tiết học hôm nay */}
+            <div className="grid" style={{ gridTemplateColumns: '1fr' }}>
+                <Card
+                    title="Tiết học hôm nay"
+                    icon={<FiClock />}
+                    subtitle={`${activeLessons} tiết dạy • ${formattedDate}`}
+                    right={
+                        <Pill tone={activeLessons > 0 ? "good" : "info"}>
+                            {activeLessons} tiết
+                        </Pill>
+                    }
+                >
                     <div className="lessons-timeline">
                         {todayLessons.map((lesson) => (
                             <div
@@ -105,11 +142,11 @@ function TeacherDashboard() {
                                         <>
                                             <div className="lesson-subject">{lesson.subject}</div>
                                             <div className="lesson-details">
-                                                <span className="lesson-class">
-                                                    <i className="fas fa-users"></i> {lesson.className}
+                                                <span className="tag tag--info">
+                                                    <FiUsers size={12} /> {lesson.className}
                                                 </span>
-                                                <span className="lesson-room">
-                                                    <i className="fas fa-door-open"></i> {lesson.room}
+                                                <span className="tag tag--muted">
+                                                    {lesson.room}
                                                 </span>
                                             </div>
                                         </>
@@ -118,118 +155,107 @@ function TeacherDashboard() {
                                     )}
                                 </div>
                                 <div className="lesson-status">
-                                    <span className={`status-badge ${lesson.status}`}>
+                                    <span className={`pill pill--${lesson.status === 'completed' ? 'good' : lesson.status === 'current' ? 'info' : lesson.status === 'upcoming' ? 'warn' : ''}`}>
                                         {getLessonStatusText(lesson.status)}
                                     </span>
                                 </div>
                             </div>
                         ))}
                     </div>
-                </div>
+                </Card>
             </div>
 
-            {/* Grid Layout for Classes and Attendance */}
-            <div className="dashboard-grid">
+            {/* Row 2 — Lớp đang dạy + Điểm danh */}
+            <div className="grid" style={{ gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 {/* Lớp đang dạy */}
-                <div className="card-db dashboard-section">
-                    <div className="card-db-header">
-                        <i className="fas fa-school"></i>
-                        <span>Lớp đang dạy</span>
-                    </div>
-                    <div className="card-db-body">
-                        <div className="classes-grid">
-                            {teachingClasses.map((cls) => (
-                                <div key={cls.id} className="class-card-db">
-                                    <div className="class-header">
-                                        <span className="class-name">{cls.className}</span>
-                                        <span className={`class-role ${cls.role.toLowerCase()}`}>
-                                            {cls.role === 'HOMEROOM' ? 'CN' : 'BM'}
-                                        </span>
-                                    </div>
-                                    <div className="class-info">
-                                        <div className="class-grade">{cls.grade}</div>
-                                        <div className="class-subject">{cls.subject}</div>
-                                    </div>
-                                    <div className="class-footer">
-                                        <span className="student-count">
-                                            <i className="fas fa-user-graduate"></i>
-                                            {cls.totalStudents} học sinh
-                                        </span>
-                                    </div>
+                <Card
+                    title="Lớp đang dạy"
+                    icon={<FiBook />}
+                    subtitle={`${teachingClasses.length} lớp được phân công`}
+                    right={
+                        <Pill tone="info">{teachingClasses.length} lớp</Pill>
+                    }
+                >
+                    <div className="classes-grid">
+                        {teachingClasses.map((cls) => (
+                            <div key={cls.id} className="class-card-db">
+                                <div className="class-header">
+                                    <span className="class-name">{cls.className}</span>
+                                    <span className={`pill pill--${cls.role === 'HOMEROOM' ? 'warn' : 'info'}`}>
+                                        {cls.role === 'HOMEROOM' ? 'CN' : 'BM'}
+                                    </span>
                                 </div>
-                            ))}
-                        </div>
+                                <div className="class-info">
+                                    <div className="class-grade">{cls.grade}</div>
+                                    <div className="class-subject">{cls.subject}</div>
+                                </div>
+                                <div className="class-footer">
+                                    <span className="student-count">
+                                        <FiUser size={14} />
+                                        {cls.totalStudents} học sinh
+                                    </span>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                </div>
+                </Card>
 
                 {/* Tình trạng điểm danh */}
-                <div className="card-db dashboard-section">
-                    <div className="card-db-header">
-                        <i className="fas fa-clipboard-check"></i>
-                        <span>Tình trạng điểm danh hôm nay</span>
-                    </div>
-                    <div className="card-db-body">
-                        <div className="attendance-summary">
-                            <div className="attendance-main">
-                                <div className="attendance-percentage">
-                                    <span className="percentage-value">{presentPercentage}%</span>
-                                    <span className="percentage-label">Tỷ lệ có mặt</span>
-                                </div>
-                                <div className="attendance-progress">
-                                    <div
-                                        className="progress-bar"
-                                        style={{ width: `${presentPercentage}%` }}
-                                    ></div>
+                <Card
+                    title="Tình trạng điểm danh hôm nay"
+                    icon={<FiCheckCircle />}
+                    subtitle="Thống kê điểm danh các lớp giảng dạy"
+                    right={
+                        <Pill tone="good">{presentPercentage}% có mặt</Pill>
+                    }
+                >
+                    <div className="attendance-summary">
+                        <div className="attendance-main">
+                            <div className="attendance-percentage">
+                                <span className="percentage-value">{presentPercentage}%</span>
+                                <span className="percentage-label">Tỷ lệ có mặt</span>
+                            </div>
+                            <div className="attendance-progress">
+                                <div
+                                    className="progress-bar"
+                                    style={{ width: `${presentPercentage}%` }}
+                                ></div>
+                            </div>
+                        </div>
+
+                        <div className="kpiFacts" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginTop: '16px' }}>
+                            <div className="fact">
+                                <div className="factIcon" style={{ color: 'var(--good)' }}><FiCheckCircle /></div>
+                                <div>
+                                    <div className="factLabel">Có mặt</div>
+                                    <div className="factValue">{attendanceStats.present}</div>
                                 </div>
                             </div>
-
-                            <div className="attendance-details">
-                                <div className="attendance-stat present">
-                                    <div className="stat-icon">
-                                        <i className="fas fa-check-circle"></i>
-                                    </div>
-                                    <div className="stat-info">
-                                        <span className="stat-value">{attendanceStats.present}</span>
-                                        <span className="stat-label">Có mặt</span>
-                                    </div>
+                            <div className="fact">
+                                <div className="factIcon" style={{ color: 'var(--bad)' }}><FiUsers /></div>
+                                <div>
+                                    <div className="factLabel">Vắng</div>
+                                    <div className="factValue">{attendanceStats.absent}</div>
                                 </div>
-
-                                <div className="attendance-stat absent">
-                                    <div className="stat-icon">
-                                        <i className="fas fa-times-circle"></i>
-                                    </div>
-                                    <div className="stat-info">
-                                        <span className="stat-value">{attendanceStats.absent}</span>
-                                        <span className="stat-label">Vắng</span>
-                                    </div>
+                            </div>
+                            <div className="fact">
+                                <div className="factIcon" style={{ color: 'var(--warn)' }}><FiClock /></div>
+                                <div>
+                                    <div className="factLabel">Đi muộn</div>
+                                    <div className="factValue">{attendanceStats.late}</div>
                                 </div>
-
-                                <div className="attendance-stat late">
-                                    <div className="stat-icon">
-                                        <i className="fas fa-clock"></i>
-                                    </div>
-                                    <div className="stat-info">
-                                        <span className="stat-value">{attendanceStats.late}</span>
-                                        <span className="stat-label">Đi muộn</span>
-                                    </div>
-                                </div>
-
-                                <div className="attendance-stat total">
-                                    <div className="stat-icon">
-                                        <i className="fas fa-users"></i>
-                                    </div>
-                                    <div className="stat-info">
-                                        <span className="stat-value">{attendanceStats.totalStudents}</span>
-                                        <span className="stat-label">Tổng số</span>
-                                    </div>
+                            </div>
+                            <div className="fact">
+                                <div className="factIcon" style={{ color: 'var(--info)' }}><FiUsers /></div>
+                                <div>
+                                    <div className="factLabel">Tổng số</div>
+                                    <div className="factValue">{attendanceStats.totalStudents}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </Card>
             </div>
         </div>
     );
 }
-
-export default TeacherDashboard;

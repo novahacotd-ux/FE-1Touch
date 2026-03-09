@@ -1,0 +1,518 @@
+/* TeacherAttendance.css - Styles for Teacher Attendance Pages */
+
+/* Session Cards Grid */
+.sessions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+/* Session Card */
+.session-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.session-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-color: var(--mc);
+}
+
+.session-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.session-class-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.session-class-name {
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--tc);
+}
+
+.session-subject {
+    font-size: 13px;
+    color: var(--ts);
+    font-weight: 600;
+}
+
+.session-period {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    background: var(--mc-trans);
+    color: var(--mc);
+}
+
+.session-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.session-time {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--ts);
+}
+
+.session-time svg {
+    font-size: 14px;
+}
+
+.session-stats {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.session-stat {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.session-stat--present {
+    color: var(--good);
+}
+
+.session-stat--absent {
+    color: var(--bad);
+}
+
+.session-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border);
+}
+
+.session-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.session-status--completed {
+    background: rgba(34, 197, 94, 0.12);
+    color: var(--good);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.session-status--in-progress {
+    background: rgba(245, 158, 11, 0.12);
+    color: var(--warn);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.session-status--pending {
+    background: rgba(99, 102, 241, 0.12);
+    color: var(--info);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.session-action {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--mc);
+}
+
+.session-action:hover {
+    text-decoration: underline;
+}
+
+/* Detail Page Styles */
+.attendance-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--tc);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.back-btn:hover {
+    background: var(--mc-trans);
+    border-color: var(--mc);
+    color: var(--mc);
+}
+
+/* Student Table Styles */
+.student-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.student-row:last-child {
+    border-bottom: none;
+}
+
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
+
+.student-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--mc-trans);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mc);
+    font-weight: 800;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.student-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.student-name {
+    font-weight: 700;
+    color: var(--tc);
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.student-code {
+    font-size: 12px;
+    color: var(--ts);
+    font-weight: 600;
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.status-badge--present {
+    background: rgba(34, 197, 94, 0.15);
+    color: var(--good);
+}
+
+.status-badge--absent {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--bad);
+}
+
+.status-badge--late {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--warn);
+}
+
+.status-badge--excused {
+    background: rgba(99, 102, 241, 0.15);
+    color: var(--info);
+}
+
+/* Check Time */
+.check-time {
+    font-size: 13px;
+    color: var(--ts);
+    font-weight: 600;
+    min-width: 70px;
+    text-align: center;
+}
+
+/* Note Input */
+.note-input {
+    flex: 1;
+    max-width: 200px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--tc);
+    padding: 0 12px;
+    font-size: 13px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.note-input:focus {
+    border-color: var(--mc);
+    box-shadow: 0 0 0 3px var(--mc-trans);
+}
+
+.note-input::placeholder {
+    color: var(--ts);
+}
+
+/* Override Button */
+.override-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--ts);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.override-btn:hover {
+    background: var(--mc-trans);
+    border-color: var(--mc);
+    color: var(--mc);
+}
+
+/* Log Section */
+.log-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.log-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.log-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--mc-trans);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mc);
+    flex-shrink: 0;
+}
+
+.log-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.log-text {
+    font-size: 13px;
+    color: var(--tc);
+    font-weight: 600;
+}
+
+.log-reason {
+    font-size: 12px;
+    color: var(--ts);
+    font-style: italic;
+}
+
+.log-time {
+    font-size: 11px;
+    color: var(--ts);
+    font-weight: 700;
+}
+
+/* Override Modal Styles */
+.override-modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.override-student-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.status-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.status-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: var(--card-bg);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.status-option:hover {
+    border-color: var(--mc);
+}
+
+.status-option.selected {
+    border-color: var(--mc);
+    background: var(--mc-trans);
+}
+
+.status-option-icon {
+    font-size: 20px;
+}
+
+.status-option-label {
+    font-weight: 700;
+    color: var(--tc);
+    font-size: 13px;
+}
+
+.reason-textarea {
+    width: 100%;
+    min-height: 80px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--tc);
+    padding: 12px;
+    font-size: 13px;
+    outline: none;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.reason-textarea:focus {
+    border-color: var(--mc);
+    box-shadow: 0 0 0 3px var(--mc-trans);
+}
+
+/* Session Info Bar */
+.session-info-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 12px 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+
+.session-info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--ts);
+    font-weight: 600;
+}
+
+.session-info-item svg {
+    color: var(--mc);
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    text-align: center;
+    color: var(--ts);
+}
+
+.empty-state svg {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sessions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .status-options {
+        grid-template-columns: 1fr;
+    }
+
+    .student-row {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .note-input {
+        max-width: 100%;
+        order: 5;
+    }
+}
