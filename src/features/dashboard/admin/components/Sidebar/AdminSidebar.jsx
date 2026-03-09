@@ -18,7 +18,7 @@ import {
 } from 'react-icons/fi';
 
 const AdminSidebar = () => {
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
     const { t } = useLanguage();
     
     const menu = [

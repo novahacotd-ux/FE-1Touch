@@ -15,12 +15,12 @@ export default function MiniStackedBars({ data }) {
         const c = 100 - a - b;
         return (
           <div key={d.label} className="miniBar" title={`${d.label}: P ${formatInt(d.a)} • L ${formatInt(d.b)} • A ${formatInt(d.c)}`}>
-            <div className="miniBarLabel">{d.label}</div>
-            <div className="miniBarTrack" style={{ height: `${Math.max(10, p)}%` }}>
+            <div className="miniBarTrack" style={{ height: `${Math.max(10, p * 0.6)}%` }}>
               <div className="miniSeg miniSeg--good" style={{ height: `${a}%` }} />
               <div className="miniSeg miniSeg--warn" style={{ height: `${b}%` }} />
               <div className="miniSeg miniSeg--bad" style={{ height: `${c}%` }} />
             </div>
+            <div className="miniBarLabel">{d.label.replace('Tiết ', 'T')}</div>
           </div>
         );
       })}

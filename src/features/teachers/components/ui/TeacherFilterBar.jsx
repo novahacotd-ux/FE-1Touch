@@ -1,5 +1,5 @@
 import Checkbox from '../../../../features/dashboard/admin/components/ui/Checkbox';
-import { FiFilter, FiUnlock, FiLock } from "react-icons/fi";
+import { FiFilter, FiUnlock, FiLock, FiSearch, FiActivity, FiBookOpen, FiUsers, FiList } from "react-icons/fi";
 import Select from '../../../../features/dashboard/admin/components/ui/Select';
 import SearchInput from '../../../../features/dashboard/admin/components/ui/SearchInput';
 
@@ -34,23 +34,29 @@ export default function TeacherFilterBar({
           
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'flex-end' }}>
             {/* Search */}
-            <div style={{ flex: '1 1 250px' }}>
-               <div className="filterLabel" style={{ marginBottom: 4 }}>Tìm kiếm</div>
-               <SearchInput 
-                 value={q} 
-                 onChange={(val) => { setQ(val); setPage(1); }} 
-                 placeholder="Tìm theo mã GV / tên / email / username…" 
-                 label={null}
-               />
+            <div style={{ flex: '1 1 250px', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '8px' }}>
+               <div className="filterLabel" style={{ marginBottom: 0 }} title="Tìm kiếm">
+                 <FiSearch />
+               </div>
+               <div style={{ flex: 1 }}>
+                 <SearchInput 
+                   value={q} 
+                   onChange={(val) => { setQ(val); setPage(1); }} 
+                   placeholder="Tìm theo mã GV / tên / email / username…" 
+                   label={null}
+                 />
+               </div>
             </div>
             
             <div className="filter">
-               <div className="filterLabel">Trạng thái</div>
+               <div className="filterLabel" title="Trạng thái">
+                 <FiActivity />
+               </div>
                <Select
                   value={statusFilter}
                   onChange={(val) => { setStatusFilter(val); setPage(1); }}
                   options={[
-                    { value: "ALL", label: "Tất cả" },
+                    { value: "ALL", label: "Tất cả trạng thái" },
                     { value: "ACTIVE", label: "ACTIVE" },
                     { value: "LOCKED", label: "LOCKED" }
                   ]}
@@ -58,31 +64,37 @@ export default function TeacherFilterBar({
             </div>
 
             <div className="filter">
-               <div className="filterLabel">Môn</div>
+               <div className="filterLabel" title="Môn">
+                 <FiBookOpen />
+               </div>
                <Select
                   value={subjectFilter}
                   onChange={(val) => { setSubjectFilter(val); setPage(1); }}
                   options={[
-                    { value: "ALL", label: "Tất cả" },
+                    { value: "ALL", label: "Tất cả môn" },
                     ...subjects.map(s => ({ value: s.id, label: `${s.code} — ${s.name}` }))
                   ]}
                />
             </div>
 
             <div className="filter">
-               <div className="filterLabel">Lớp</div>
+               <div className="filterLabel" title="Lớp">
+                 <FiUsers />
+               </div>
                <Select
                   value={classFilter}
                   onChange={(val) => { setClassFilter(val); setPage(1); }}
                   options={[
-                    { value: "ALL", label: "Tất cả" },
+                    { value: "ALL", label: "Tất cả lớp" },
                     ...classes.map(c => ({ value: c.id, label: c.name }))
                   ]}
                />
             </div>
 
             <div className="filter">
-               <div className="filterLabel">Sắp xếp</div>
+               <div className="filterLabel" title="Sắp xếp">
+                 <FiList />
+               </div>
                <Select
                   value={sortKey}
                   onChange={(val) => setSortKey(val)}
@@ -95,7 +107,9 @@ export default function TeacherFilterBar({
             </div>
 
             <div className="filter">
-               <div className="filterLabel">Tùy chọn</div>
+               <div className="filterLabel" title="Tùy chọn">
+                 <FiFilter />
+               </div>
                <div style={{ display: 'flex', gap: '12px', height: '40px', alignItems: 'center' }}>
                  <Checkbox 
                    checked={onlyHomeroom} 
