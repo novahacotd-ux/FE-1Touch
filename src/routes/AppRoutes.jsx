@@ -8,6 +8,12 @@ import TeacherDashboard from "../features/dashboard/teacher/pages/TeacherDashboa
 import Schedule from "../features/dashboard/teacher/pages/Schedule.jsx";
 import TeachingClasses from "../features/dashboard/teacher/pages/TeachingClasses.jsx";
 import ClassDetail from "../features/dashboard/teacher/pages/ClassDetail.jsx";
+import AttendanceSessions from "../features/dashboard/teacher/pages/AttendanceSessions.jsx";
+import AttendanceDetail from "../features/dashboard/teacher/pages/AttendanceDetail.jsx";
+import SeatingChart from "../features/dashboard/teacher/pages/SeatingChart.jsx";
+import StudentManagement from "../features/dashboard/teacher/pages/StudentManagement.jsx";
+import ParentAnnouncements from "../features/dashboard/teacher/pages/ParentAnnouncements.jsx";
+import TeacherReports from "../features/dashboard/teacher/pages/TeacherReports.jsx";
 import AdminTeacherTab from "../features/teachers/pages/AdminTeacherTab";
 import AdminClasses from "../features/classes/pages/AdminClasses";
 import AdminStudents from "../features/students/pages/AdminStudents";
@@ -69,7 +75,16 @@ const AppRoutes = () => {
                     <TeacherLayout pageTitle="Attendance" />
                 }
             >
-                <Route index element={<div className="p-4"><h2>Attendance</h2><p>Coming soon...</p></div>} />
+                <Route index element={<AttendanceSessions />} />
+            </Route>
+
+            <Route
+                path="/teacher/attendance/:sessionId"
+                element={
+                    <TeacherLayout pageTitle="Attendance Detail" />
+                }
+            >
+                <Route index element={<AttendanceDetail />} />
             </Route>
 
             <Route
@@ -78,7 +93,7 @@ const AppRoutes = () => {
                     <TeacherLayout pageTitle="Seating Chart" />
                 }
             >
-                <Route index element={<div className="p-4"><h2>Seating Chart</h2><p>Coming soon...</p></div>} />
+                <Route index element={<SeatingChart />} />
             </Route>
 
             <Route
@@ -87,7 +102,7 @@ const AppRoutes = () => {
                     <TeacherLayout pageTitle="Students" />
                 }
             >
-                <Route index element={<div className="p-4"><h2>Students</h2><p>Coming soon...</p></div>} />
+                <Route index element={<StudentManagement />} />
             </Route>
 
             <Route
@@ -96,7 +111,7 @@ const AppRoutes = () => {
                     <TeacherLayout pageTitle="Announcements" />
                 }
             >
-                <Route index element={<div className="p-4"><h2>Announcements</h2><p>Coming soon...</p></div>} />
+                <Route index element={<ParentAnnouncements />} />
             </Route>
 
             <Route
@@ -105,8 +120,8 @@ const AppRoutes = () => {
                     <TeacherLayout pageTitle="Reports" />
                 }
             >
-                <Route index element={<div className="p-4"><h2>Reports</h2><p>Coming soon...</p></div>} />
-                
+                <Route index element={<TeacherReports />} />
+
 
             </Route>
             <Route

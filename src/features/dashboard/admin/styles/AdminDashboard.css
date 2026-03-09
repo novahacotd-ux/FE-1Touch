@@ -742,7 +742,7 @@
 }
 
 .table {
-  border: 1px solid var(--border);
+  border: none;
   border-radius: 16px;
   overflow: hidden;
   background: var(--card-bg);
