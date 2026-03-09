@@ -1,0 +1,568 @@
+/* SeatingChart.css - Styles for Teacher Seating Chart */
+
+/* Main Layout */
+.seating-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 20px;
+    min-height: calc(100vh - 280px);
+}
+
+@media (max-width: 1024px) {
+    .seating-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Toolbar */
+.seating-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--border);
+    margin: 0 8px;
+}
+
+/* Teacher Area / Blackboard */
+.teacher-area {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-radius: 12px;
+    padding: 16px 24px;
+    text-align: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.teacher-area svg {
+    font-size: 18px;
+}
+
+/* Seat Grid Container */
+.seat-grid-container {
+    padding: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: auto;
+}
+
+/* Seat Grid */
+.seat-grid {
+    display: grid;
+    gap: 12px;
+    justify-content: center;
+    padding: 10px;
+}
+
+/* Individual Seat */
+.seat {
+    width: 80px;
+    height: 90px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: var(--card-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    user-select: none;
+}
+
+.seat:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Empty Seat */
+.seat--empty {
+    border-style: dashed;
+    background: rgba(0, 0, 0, 0.02);
+}
+
+html.dark .seat--empty {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.seat--empty:hover {
+    border-color: var(--mc);
+    background: var(--mc-trans);
+}
+
+/* Seat with Student - Status Colors */
+.seat--present {
+    border-color: rgba(34, 197, 94, 0.5);
+    background: rgba(34, 197, 94, 0.08);
+}
+
+.seat--present:hover {
+    border-color: var(--good);
+    box-shadow: 0 6px 16px rgba(34, 197, 94, 0.2);
+}
+
+.seat--absent {
+    border-color: rgba(239, 68, 68, 0.5);
+    background: rgba(239, 68, 68, 0.08);
+}
+
+.seat--absent:hover {
+    border-color: var(--bad);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.2);
+}
+
+.seat--late {
+    border-color: rgba(245, 158, 11, 0.5);
+    background: rgba(245, 158, 11, 0.08);
+}
+
+.seat--late:hover {
+    border-color: var(--warn);
+    box-shadow: 0 6px 16px rgba(245, 158, 11, 0.2);
+}
+
+.seat--excused {
+    border-color: rgba(99, 102, 241, 0.5);
+    background: rgba(99, 102, 241, 0.08);
+}
+
+.seat--excused:hover {
+    border-color: var(--info);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.2);
+}
+
+.seat--unknown {
+    border-color: var(--border);
+    background: var(--card-bg);
+}
+
+/* Seat Avatar */
+.seat-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 12px;
+    color: #fff;
+}
+
+.seat--present .seat-avatar {
+    background: var(--good);
+}
+
+.seat--absent .seat-avatar {
+    background: var(--bad);
+}
+
+.seat--late .seat-avatar {
+    background: var(--warn);
+}
+
+.seat--excused .seat-avatar {
+    background: var(--info);
+}
+
+.seat--unknown .seat-avatar {
+    background: var(--ts);
+}
+
+/* Seat Name */
+.seat-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--tc);
+    text-align: center;
+    max-width: 70px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Seat Label (row-col) */
+.seat-label {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--ts);
+    opacity: 0.6;
+}
+
+/* Empty Seat Icon */
+.seat-empty-icon {
+    font-size: 24px;
+    color: var(--ts);
+    opacity: 0.4;
+}
+
+/* Drag States */
+.seat--drag-over {
+    border-color: var(--mc) !important;
+    background: var(--mc-trans) !important;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 4px var(--mc-trans);
+}
+
+.seat--dragging {
+    opacity: 0.5;
+    transform: scale(0.95);
+}
+
+/* Student Panel */
+.student-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+.student-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* Student Card (Draggable) */
+.student-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: grab;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+
+.student-card:hover {
+    border-color: var(--mc);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.student-card:active {
+    cursor: grabbing;
+}
+
+.student-card--dragging {
+    opacity: 0.5;
+    transform: scale(0.95);
+}
+
+.student-card-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--mc-trans);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mc);
+    font-weight: 800;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.student-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+}
+
+.student-card-name {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--tc);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.student-card-code {
+    font-size: 11px;
+    color: var(--ts);
+    font-weight: 600;
+}
+
+.student-card-drag-icon {
+    color: var(--ts);
+    opacity: 0.5;
+}
+
+/* Legend */
+.seating-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-top: 16px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ts);
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+}
+
+.legend-dot--present {
+    background: var(--good);
+}
+
+.legend-dot--absent {
+    background: var(--bad);
+}
+
+.legend-dot--late {
+    background: var(--warn);
+}
+
+.legend-dot--excused {
+    background: var(--info);
+}
+
+.legend-dot--empty {
+    background: var(--ts);
+    opacity: 0.3;
+}
+
+/* Info Modal Content */
+.student-info-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.student-info-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.student-info-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: var(--mc-trans);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mc);
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.student-info-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.student-info-name {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--tc);
+}
+
+.student-info-code {
+    font-size: 13px;
+    color: var(--ts);
+    font-weight: 600;
+}
+
+.student-info-class {
+    font-size: 12px;
+    color: var(--ts);
+}
+
+.student-info-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--tc);
+}
+
+.student-info-row svg {
+    color: var(--mc);
+    font-size: 16px;
+}
+
+.student-info-row strong {
+    margin-left: auto;
+}
+
+.student-info-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+/* Empty State for Unassigned */
+.unassigned-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+    text-align: center;
+    color: var(--ts);
+}
+
+.unassigned-empty svg {
+    font-size: 36px;
+    margin-bottom: 12px;
+    opacity: 0.4;
+}
+
+.unassigned-empty p {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Row Labels */
+.seat-row-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--ts);
+    width: 30px;
+}
+
+/* Stats Bar */
+.seating-stats {
+    display: flex;
+    gap: 16px;
+    padding: 12px 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+
+.seating-stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.seating-stat-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.seating-stat-icon--present {
+    background: rgba(34, 197, 94, 0.15);
+    color: var(--good);
+}
+
+.seating-stat-icon--absent {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--bad);
+}
+
+.seating-stat-icon--late {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--warn);
+}
+
+.seating-stat-icon--excused {
+    background: rgba(99, 102, 241, 0.15);
+    color: var(--info);
+}
+
+.seating-stat-icon--total {
+    background: var(--mc-trans);
+    color: var(--mc);
+}
+
+.seating-stat-value {
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--tc);
+}
+
+.seating-stat-label {
+    font-size: 11px;
+    color: var(--ts);
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .seat {
+        width: 60px;
+        height: 70px;
+    }
+
+    .seat-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 10px;
+    }
+
+    .seat-name {
+        font-size: 9px;
+        max-width: 50px;
+    }
+
+    .seating-stats {
+        flex-wrap: wrap;
+    }
+}
